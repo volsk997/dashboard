@@ -3221,10 +3221,10 @@ sections:
                      {% set y = (expand(config.entity) | map(attribute='entity_id') | list | count)%}
                      {% if y > 1 %} {{x}} вкл • {{(state_attr(config.entity, 'brightness')|float(0)/255*100)|round(0)}}%
                      {% else %} {{(state_attr(config.entity, 'brightness')|float(0)/255*100)|round(0)}}%
-                     {% endif %}
+                     {% endif %} •  {{state_attr(config.entity, 'effect')}}
                     {% elif is_state(config.entity, 'off') %} Выключено
                     {% else %} Недоступно
-                    {% endif %}
+                    {% endif %} 
                   entity: light.embi_lampa
                   tap_action:
                     action: navigate
