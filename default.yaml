@@ -2033,9 +2033,11 @@ sections:
                 double_tap_action:
                   action: none
               - type: template
-                entity: camera.prikhozhaia
+                entity: switch.prikhozhaia_privacy
                 icon: >-
-                  {% if is_state(config.entity, 'unavailable') %}
+                  {% if is_state(config.entity,'on')%} mdi:eye-off
+
+                  {% elif is_state(config.entity, 'unavailable') %}
                   mdi:alert-circle
 
                   {% else %} mdi:eye
@@ -2047,7 +2049,7 @@ sections:
                   {% else %} white
                   {% endif %}
                 tap_action:
-                  action: none
+                  action: toggle
                 hold_action:
                   action: none
                 double_tap_action:
@@ -2055,13 +2057,41 @@ sections:
               - type: conditional
                 conditions:
                   - condition: state
-                    entity: binary_sensor.motion_enter_occupancy
+                    entity: binary_sensor.prikhozhaia_cell_motion_detection
                     state: "on"
                 chip:
                   type: template
-                  entity: binary_sensor.motion_enter_occupancy
+                  entity: binary_sensor.prikhozhaia_cell_motion_detection
                   icon: >-
                     {% if is_state(config.entity,'on')%} mdi:motion
+
+                    {% elif is_state(config.entity, 'unavailable') %}
+                    mdi:alert-circle
+
+                    {% else %} 
+
+                    {% endif %}
+                  icon_color: |-
+                    {% if is_state(config.entity,'on')%} white
+                    {% elif is_state(config.entity, 'unavailable') %} red
+                    {% else %} 
+                    {% endif %}
+                  tap_action:
+                    action: more-info
+                  hold_action:
+                    action: none
+                  double_tap_action:
+                    action: none
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: binary_sensor.prikhozhaia_noise
+                    state: "on"
+                chip:
+                  type: template
+                  entity: binary_sensor.prikhozhaia_noise
+                  icon: >-
+                    {% if is_state(config.entity,'on')%} mdi:account-voice
 
                     {% elif is_state(config.entity, 'unavailable') %}
                     mdi:alert-circle
