@@ -1,6 +1,6 @@
 path: default
 type: sections
-max_columns: 4
+max_columns: 5
 dense_section_placement: false
 sections:
   - type: grid
@@ -1743,11 +1743,11 @@ sections:
               - type: conditional
                 conditions:
                   - condition: state
-                    entity: binary_sensor.motion_kuhnya_occupancy
+                    entity: binary_sensor.kukhnia_cell_motion_detection
                     state: "on"
                 chip:
                   type: template
-                  entity: binary_sensor.motion_kuhnya_occupancy
+                  entity: binary_sensor.kukhnia_cell_motion_detection
                   icon: >-
                     {% if is_state(config.entity,'on')%} mdi:motion
 
@@ -4827,6 +4827,284 @@ sections:
       - type: custom:vertical-stack-in-card
         cards:
           - type: custom:mushroom-template-card
+            primary: Mac Mini
+            secondary: ""
+            icon: mdi:monitor
+            badge_icon: ""
+            tap_action:
+              action: none
+            icon_color: |-
+              {% if is_state(config.entity, 'on' )%} black
+              {% else %} disabled
+              {% endif %}
+            double_tap_action:
+              action: none
+            badge_color: ""
+            fill_container: true
+            picture: ""
+            hold_action:
+              action: none
+            layout: horizontal
+            entity: binary_sensor.mac_mini_active
+            card_mod:
+              style:
+                .: |
+                  {% include 'mushroom_ha_card_transparent.jinja' %} 
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                entity: binary_sensor.mac_mini_display
+                icon: |-
+                  {% if is_state(config.entity, 'on')%} mdi:monitor
+                  {% else %} mdi:monitor-off
+                  {% endif %}
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: binary_sensor.mac_mini_display
+                    state: "on"
+                chip:
+                  type: template
+                  tap_action:
+                    action: more-info
+                  hold_action:
+                    action: none
+                  double_tap_action:
+                    action: none
+                  entity: sensor.mac_mini_frontmost_app
+                  icon: |2-
+                     {% if is_state(config.entity, 'loginwindow') %} mdi:lock
+                     {% else %} 
+                       {{states[config.entity].attributes.icon}}
+                     {% endif %}
+                  content: |2-
+                     {% if is_state(config.entity, 'loginwindow') %} Заблокирован
+                     {% else %} 
+
+                       {{states('sensor.mac_mini_frontmost_app')}}
+
+                     {% endif %}
+              - type: template
+                tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                entity: sensor.mac_mini_connection_type
+                icon: "{{states[config.entity].attributes.icon}}"
+                content: >+
+                  {% set x = config.entity %}
+
+                  {% set y = x|replace("connection_type","ssid") %}
+
+
+                  {% if states[config.entity].state == 'Cellular' %} Yota
+
+                  {% elif states[config.entity].state == 'Wi-Fi' %}
+                  {{states[y].state}}
+
+                  {% else %} {{states[config.entity].state}}
+
+                  {% endif %}
+
+            alignment: start
+            card_mod:
+              style: |
+                {% set top = 8 %} 
+                {% set font_weight = 400 %}
+                {% set font_size = 14 %}
+                {% set chip_height = 45 %}
+                {% include 'chip_secondary_shape.jinja' %}
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                icon: >-
+                  {% if is_state('sensor.mac_mini_frontmost_app','loginwindow')
+                  %} mdi:lock
+
+                  {% elif is_state_attr(config.entity, 'Locked', true) %}
+                  mdi:lock
+
+                  {% elif is_state_attr(config.entity, 'Sleeping', true) %}
+                  fas:moon
+
+                  {% else %} 
+
+                  {% endif %}
+                entity: binary_sensor.mac_mini_active
+                tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                icon_color: disabled
+            alignment: end
+            card_mod:
+              style: |
+                {% include 'thirdary_chip_ha_card.jinja' %}
+        grid_options:
+          columns: 6
+          rows: auto
+        card_mod:
+          style: |
+            {% set entity = 'binary_sensor.mac_mini_active' %}
+            {% set state_on = 'on' %}
+            {% set hover = true %}
+
+            {% include 'stack_card.jinja'%}
+      - type: custom:vertical-stack-in-card
+        cards:
+          - type: custom:mushroom-template-card
+            secondary: ""
+            icon: mdi:laptop
+            badge_icon: ""
+            tap_action:
+              action: none
+            double_tap_action:
+              action: none
+            badge_color: ""
+            fill_container: true
+            picture: ""
+            hold_action:
+              action: none
+            layout: horizontal
+            entity: binary_sensor.macbook_air_active
+            icon_color: |-
+              {% if is_state(config.entity, 'on' )%} black
+              {% else %} disabled
+              {% endif %}
+            primary: Macbook Air
+            card_mod:
+              style:
+                .: |
+                  {% include 'mushroom_ha_card_transparent.jinja' %} 
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                entity: sensor.macbook_air_battery
+                content: "{{states(config.entity)}}%"
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                icon: >-
+                  {% if
+                  as_timestamp(states.sensor.air_internal_battery_level.last_changed)
+                  >
+                  as_timestamp(states.sensor.air_s_internal_battery_level.last_changed)
+                  %}
+
+                  {{states.sensor.air_internal_battery_level.attributes.icon}}
+
+                  {% else %}
+
+                  {{states.sensor.air_s_internal_battery_level.attributes.icon}}
+
+                  {% endif %}
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: sensor.macbook_air_app
+                    state_not: Экран блокировки
+                  - condition: state
+                    entity: binary_sensor.macbook_air_spiashchii_rezhim
+                    state: "off"
+                chip:
+                  type: template
+                  tap_action:
+                    action: more-info
+                  hold_action:
+                    action: none
+                  double_tap_action:
+                    action: none
+                  entity: sensor.macbook_air_app
+                  icon: |2-
+                     {% if is_state(config.entity, 'loginwindow') %} mdi:lock
+                     {% else %}  mdi:apps
+
+                     {% endif %}
+                  content: |2-
+                     {% if is_state(config.entity, 'loginwindow') %} Заблокирован
+                     {% else %} {{states(config.entity)}}
+                     {% endif %}
+              - type: template
+                tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                entity: sensor.macbook_air_connection
+                icon: mdi:wifi
+                content: >
+                  {% set x = config.entity %}
+
+                  {% set y = x|replace("connection_type","ssid") %}
+
+
+                  {% if states[config.entity].state == 'Cellular' %} Yota
+
+                  {% elif states[config.entity].state == 'Wi-Fi' %}
+                  {{states[y].state}}
+
+                  {% else %} {{states[config.entity].state}}
+
+                  {% endif %}
+            alignment: start
+            card_mod:
+              style: |
+                {% set top = 8 %} 
+                {% set font_weight = 400 %}
+                {% set font_size = 14 %}
+                {% set chip_height = 45 %}
+                {% include 'chip_secondary_shape.jinja' %}
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                icon: >-
+                  {% if is_state('binary_sensor.macbook_air_spiashchii_rezhim',
+                  'off') %}
+                      {% if is_state('sensor.macbook_air_user', 'Станислав') %} mdi:face-man
+                      {% elif is_state('sensor.macbook_air_user', 'Мелкая') %} mdi:face-woman
+                      {% endif %}
+                  {% else %} mdi:lock
+
+                  {% endif %}
+                entity: sensor.macbook_air_user
+                tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                icon_color: disabled
+            alignment: end
+            card_mod:
+              style: |
+                {% include 'thirdary_chip_ha_card.jinja' %}
+        grid_options:
+          columns: 6
+          rows: auto
+        card_mod:
+          style: |
+            {% set entity = 'binary_sensor.macbook_air_active' %}
+            {% set state_on = 'on' %}
+            {% set hover = true %}
+
+            {% include 'stack_card.jinja'%}
+      - type: custom:vertical-stack-in-card
+        cards:
+          - type: custom:mushroom-template-card
             primary: |-
               {% set title = state_attr(config.entity,'media_title') %}
 
@@ -5117,284 +5395,6 @@ sections:
       - type: custom:vertical-stack-in-card
         cards:
           - type: custom:mushroom-template-card
-            primary: Mac Mini
-            secondary: ""
-            icon: mdi:monitor
-            badge_icon: ""
-            tap_action:
-              action: none
-            icon_color: |-
-              {% if is_state(config.entity, 'on' )%} black
-              {% else %} disabled
-              {% endif %}
-            double_tap_action:
-              action: none
-            badge_color: ""
-            fill_container: true
-            picture: ""
-            hold_action:
-              action: none
-            layout: horizontal
-            entity: binary_sensor.mac_mini_active
-            card_mod:
-              style:
-                .: |
-                  {% include 'mushroom_ha_card_transparent.jinja' %} 
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                entity: binary_sensor.mac_mini_display
-                icon: |-
-                  {% if is_state(config.entity, 'on')%} mdi:monitor
-                  {% else %} mdi:monitor-off
-                  {% endif %}
-                tap_action:
-                  action: more-info
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-              - type: conditional
-                conditions:
-                  - condition: state
-                    entity: binary_sensor.mac_mini_display
-                    state: "on"
-                chip:
-                  type: template
-                  tap_action:
-                    action: more-info
-                  hold_action:
-                    action: none
-                  double_tap_action:
-                    action: none
-                  entity: sensor.mac_mini_frontmost_app
-                  icon: |2-
-                     {% if is_state(config.entity, 'loginwindow') %} mdi:lock
-                     {% else %} 
-                       {{states[config.entity].attributes.icon}}
-                     {% endif %}
-                  content: |2-
-                     {% if is_state(config.entity, 'loginwindow') %} Заблокирован
-                     {% else %} 
-
-                       {{states('sensor.mac_mini_frontmost_app')}}
-
-                     {% endif %}
-              - type: template
-                tap_action:
-                  action: none
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                entity: sensor.mac_mini_connection_type
-                icon: "{{states[config.entity].attributes.icon}}"
-                content: >+
-                  {% set x = config.entity %}
-
-                  {% set y = x|replace("connection_type","ssid") %}
-
-
-                  {% if states[config.entity].state == 'Cellular' %} Yota
-
-                  {% elif states[config.entity].state == 'Wi-Fi' %}
-                  {{states[y].state}}
-
-                  {% else %} {{states[config.entity].state}}
-
-                  {% endif %}
-
-            alignment: start
-            card_mod:
-              style: |
-                {% set top = 8 %} 
-                {% set font_weight = 400 %}
-                {% set font_size = 14 %}
-                {% set chip_height = 45 %}
-                {% include 'chip_secondary_shape.jinja' %}
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                icon: >-
-                  {% if is_state('sensor.mac_mini_frontmost_app','loginwindow')
-                  %} mdi:lock
-
-                  {% elif is_state_attr(config.entity, 'Locked', true) %}
-                  mdi:lock
-
-                  {% elif is_state_attr(config.entity, 'Sleeping', true) %}
-                  fas:moon
-
-                  {% else %} 
-
-                  {% endif %}
-                entity: binary_sensor.mac_mini_active
-                tap_action:
-                  action: none
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                icon_color: disabled
-            alignment: end
-            card_mod:
-              style: |
-                {% include 'thirdary_chip_ha_card.jinja' %}
-        grid_options:
-          columns: 6
-          rows: auto
-        card_mod:
-          style: |
-            {% set entity = 'binary_sensor.mac_mini_active' %}
-            {% set state_on = 'on' %}
-            {% set hover = true %}
-
-            {% include 'stack_card.jinja'%}
-      - type: custom:vertical-stack-in-card
-        cards:
-          - type: custom:mushroom-template-card
-            secondary: ""
-            icon: mdi:laptop
-            badge_icon: ""
-            tap_action:
-              action: none
-            double_tap_action:
-              action: none
-            badge_color: ""
-            fill_container: true
-            picture: ""
-            hold_action:
-              action: none
-            layout: horizontal
-            entity: binary_sensor.macbook_air_active
-            icon_color: |-
-              {% if is_state(config.entity, 'on' )%} black
-              {% else %} disabled
-              {% endif %}
-            primary: Macbook Air
-            card_mod:
-              style:
-                .: |
-                  {% include 'mushroom_ha_card_transparent.jinja' %} 
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                entity: sensor.macbook_air_battery
-                content: "{{states(config.entity)}}%"
-                tap_action:
-                  action: more-info
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                icon: >-
-                  {% if
-                  as_timestamp(states.sensor.air_internal_battery_level.last_changed)
-                  >
-                  as_timestamp(states.sensor.air_s_internal_battery_level.last_changed)
-                  %}
-
-                  {{states.sensor.air_internal_battery_level.attributes.icon}}
-
-                  {% else %}
-
-                  {{states.sensor.air_s_internal_battery_level.attributes.icon}}
-
-                  {% endif %}
-              - type: conditional
-                conditions:
-                  - condition: state
-                    entity: sensor.macbook_air_app
-                    state_not: Экран блокировки
-                  - condition: state
-                    entity: binary_sensor.macbook_air_spiashchii_rezhim
-                    state: "off"
-                chip:
-                  type: template
-                  tap_action:
-                    action: more-info
-                  hold_action:
-                    action: none
-                  double_tap_action:
-                    action: none
-                  entity: sensor.macbook_air_app
-                  icon: |2-
-                     {% if is_state(config.entity, 'loginwindow') %} mdi:lock
-                     {% else %}  mdi:apps
-
-                     {% endif %}
-                  content: |2-
-                     {% if is_state(config.entity, 'loginwindow') %} Заблокирован
-                     {% else %} {{states(config.entity)}}
-                     {% endif %}
-              - type: template
-                tap_action:
-                  action: none
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                entity: sensor.macbook_air_connection
-                icon: mdi:wifi
-                content: >
-                  {% set x = config.entity %}
-
-                  {% set y = x|replace("connection_type","ssid") %}
-
-
-                  {% if states[config.entity].state == 'Cellular' %} Yota
-
-                  {% elif states[config.entity].state == 'Wi-Fi' %}
-                  {{states[y].state}}
-
-                  {% else %} {{states[config.entity].state}}
-
-                  {% endif %}
-            alignment: start
-            card_mod:
-              style: |
-                {% set top = 8 %} 
-                {% set font_weight = 400 %}
-                {% set font_size = 14 %}
-                {% set chip_height = 45 %}
-                {% include 'chip_secondary_shape.jinja' %}
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                icon: >-
-                  {% if is_state('binary_sensor.macbook_air_spiashchii_rezhim',
-                  'off') %}
-                      {% if is_state('sensor.macbook_air_user', 'Станислав') %} mdi:face-man
-                      {% elif is_state('sensor.macbook_air_user', 'Мелкая') %} mdi:face-woman
-                      {% endif %}
-                  {% else %} mdi:lock
-
-                  {% endif %}
-                entity: sensor.macbook_air_user
-                tap_action:
-                  action: none
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                icon_color: disabled
-            alignment: end
-            card_mod:
-              style: |
-                {% include 'thirdary_chip_ha_card.jinja' %}
-        grid_options:
-          columns: 6
-          rows: auto
-        card_mod:
-          style: |
-            {% set entity = 'binary_sensor.macbook_air_active' %}
-            {% set state_on = 'on' %}
-            {% set hover = true %}
-
-            {% include 'stack_card.jinja'%}
-      - type: custom:vertical-stack-in-card
-        cards:
-          - type: custom:mushroom-template-card
             primary: ""
             secondary: ""
             icon: mdi:security-network
@@ -5518,6 +5518,148 @@ sections:
 
 
             {% include 'stack_card.jinja'%}
+      - type: custom:vertical-stack-in-card
+        cards:
+          - type: custom:mushroom-template-card
+            primary: ""
+            secondary: ""
+            icon: >-
+              {% if state_attr(config.entity, 'icon') != None %}
+              {{state_attr(config.entity, 'icon')}}
+
+              {% else %} mdi:vibrate-off
+
+              {% endif %}
+            badge_icon: ""
+            tap_action:
+              action: more-info
+            entity: binary_sensor.vibro_vibration
+            icon_color: |-
+              {% if is_state(config.entity, 'on') %} indigo
+              {% else %} disabled
+              {% endif %}
+            double_tap_action:
+              action: none
+            badge_color: ""
+            fill_container: true
+            picture: ""
+            hold_action:
+              action: none
+            layout: horizontal
+            card_mod:
+              style:
+                mushroom-shape-icon$: |
+                  {% include 'mushroom_icon_shape.jinja' %} 
+                .: |
+                  {% include 'mushroom_ha_card_transparent.jinja' %} 
+          - type: custom:mushroom-template-card
+            icon: ""
+            badge_icon: ""
+            tap_action:
+              action: more-info
+            entity: binary_sensor.vibro_vibration
+            icon_color: ""
+            layout: horizontal
+            double_tap_action:
+              action: none
+            badge_color: ""
+            fill_container: true
+            picture: ""
+            hold_action:
+              action: none
+            secondary:  
+            primary: >-
+              {% if state_attr(config.entity, 'friendly_name') != None %}
+              {{state_attr(config.entity, 'friendly_name')}}
+
+              {% else %} Вибрация
+
+              {% endif %}
+            card_mod:
+              style:
+                .: |
+                  {% include 'mushroom_ha_card_transparent.jinja' %} 
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                icon: >-
+                  {% if states(config.entity) in ['unknown', 'unavailable',
+                  'none']  %} mdi:alert-circle
+
+                  {% else %} mdi:chevron-right
+
+                  {% endif %}
+                icon_color: >-
+                  {% if states(config.entity) in ['unknown', 'unavailable',
+                  'none']  %} red
+
+                  {% else %} 
+
+                  {% endif %}
+                tap_action:
+                  action: navigate
+                  navigation_path: /dashboard-iphone/unknown
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                entity: binary_sensor.vibro_vibration
+            alignment: end
+            card_mod:
+              style: |
+                {% include 'thirdary_chip_ha_card.jinja' %}
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                entity: input_number.kopilka
+                content: "{{states(config.entity)|int}} руб."
+              - type: template
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                entity: binary_sensor.vibro_vibration
+                content: "{% include 'last_changed_calc.jinja' %}"
+              - type: conditional
+                conditions:
+                  - condition: numeric_state
+                    entity: sensor.vibro_battery
+                    below: 20
+                chip:
+                  type: template
+                  tap_action:
+                    action: more-info
+                  hold_action:
+                    action: none
+                  double_tap_action:
+                    action: none
+                  entity: sensor.vibro_battery
+                  content: "{{states(config.entity)|int(0)}}%"
+                  icon: mdi:battery-alert-variant-outline
+                  icon_color: red
+            alignment: start
+            card_mod:
+              style: |
+                {% include 'scroll_secondary_ha_card_chip_container.jinja' %}
+        grid_options:
+          columns: 3
+          rows: auto
+        card_mod:
+          style: |
+            {% set entity = 'binary_sensor.vibro_vibration' %}
+            {% set state_on = 'on' %}
+            {% set hover = true %}
+
+            {% include 'stack_card.jinja'%}
+            }
     column_span: 6
   - type: grid
     cards:
@@ -6375,6 +6517,108 @@ sections:
           - condition: state
             entity: person.iulka
             state: home
+      - type: custom:vertical-stack-in-card
+        cards:
+          - type: custom:mushroom-template-card
+            primary: ""
+            secondary: ""
+            badge_icon: ""
+            tap_action:
+              action: more-info
+            entity: binary_sensor.kreslo
+            icon_color: |-
+              {% if is_state(config.entity, 'on') %} black
+              {% else %} disabled
+              {% endif %}
+            double_tap_action:
+              action: none
+            badge_color: ""
+            fill_container: true
+            picture: ""
+            hold_action:
+              action: none
+            layout: horizontal
+            icon: mdi:chair-rolling
+            card_mod:
+              style:
+                mushroom-shape-icon$: |
+                  {% include 'mushroom_icon_shape.jinja' %} 
+                .: |
+                  {% include 'mushroom_ha_card_transparent.jinja' %} 
+          - type: custom:mushroom-template-card
+            icon: ""
+            badge_icon: ""
+            tap_action:
+              action: more-info
+            entity: binary_sensor.kreslo
+            icon_color: ""
+            layout: horizontal
+            double_tap_action:
+              action: none
+            badge_color: ""
+            fill_container: true
+            picture: ""
+            hold_action:
+              action: none
+            secondary:  
+            primary: Кресло
+            card_mod:
+              style:
+                .: |
+                  {% include 'mushroom_ha_card_transparent.jinja' %} 
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                icon: >-
+                  {% if states(config.entity) in ['unknown', 'unavailable',
+                  'none']  %} mdi:alert-circle
+
+                  {% else %} 
+
+                  {% endif %}
+                icon_color: >-
+                  {% if states(config.entity) in ['unknown', 'unavailable',
+                  'none']  %} red
+
+                  {% else %} 
+
+                  {% endif %}
+                tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                entity: binary_sensor.kreslo
+            alignment: end
+            card_mod:
+              style: |
+                {% include 'thirdary_chip_ha_card.jinja' %}
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                entity: binary_sensor.kreslo
+                content: "{% include 'last_changed_calc.jinja' %}"
+            alignment: start
+            card_mod:
+              style: |
+                {% include 'scroll_secondary_ha_card_chip_container.jinja' %}
+        grid_options:
+          columns: 3
+          rows: auto
+        card_mod:
+          style: |
+            {% set entity = 'binary_sensor.kreslo' %}
+            {% set state_on = 'on' %}
+            {% set hover = true %}
+
+            {% include 'stack_card.jinja'%}
       - type: custom:vertical-stack-in-card
         cards:
           - type: custom:mushroom-template-card
@@ -7405,148 +7649,6 @@ sections:
             {% set hover = true %}
 
             {% include 'stack_card.jinja'%}
-      - type: custom:vertical-stack-in-card
-        cards:
-          - type: custom:mushroom-template-card
-            primary: ""
-            secondary: ""
-            icon: >-
-              {% if state_attr(config.entity, 'icon') != None %}
-              {{state_attr(config.entity, 'icon')}}
-
-              {% else %} mdi:vibrate-off
-
-              {% endif %}
-            badge_icon: ""
-            tap_action:
-              action: more-info
-            entity: binary_sensor.vibro_vibration
-            icon_color: |-
-              {% if is_state(config.entity, 'on') %} indigo
-              {% else %} disabled
-              {% endif %}
-            double_tap_action:
-              action: none
-            badge_color: ""
-            fill_container: true
-            picture: ""
-            hold_action:
-              action: none
-            layout: horizontal
-            card_mod:
-              style:
-                mushroom-shape-icon$: |
-                  {% include 'mushroom_icon_shape.jinja' %} 
-                .: |
-                  {% include 'mushroom_ha_card_transparent.jinja' %} 
-          - type: custom:mushroom-template-card
-            icon: ""
-            badge_icon: ""
-            tap_action:
-              action: more-info
-            entity: binary_sensor.vibro_vibration
-            icon_color: ""
-            layout: horizontal
-            double_tap_action:
-              action: none
-            badge_color: ""
-            fill_container: true
-            picture: ""
-            hold_action:
-              action: none
-            secondary:  
-            primary: >-
-              {% if state_attr(config.entity, 'friendly_name') != None %}
-              {{state_attr(config.entity, 'friendly_name')}}
-
-              {% else %} Вибрация
-
-              {% endif %}
-            card_mod:
-              style:
-                .: |
-                  {% include 'mushroom_ha_card_transparent.jinja' %} 
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                icon: >-
-                  {% if states(config.entity) in ['unknown', 'unavailable',
-                  'none']  %} mdi:alert-circle
-
-                  {% else %} mdi:chevron-right
-
-                  {% endif %}
-                icon_color: >-
-                  {% if states(config.entity) in ['unknown', 'unavailable',
-                  'none']  %} red
-
-                  {% else %} 
-
-                  {% endif %}
-                tap_action:
-                  action: navigate
-                  navigation_path: /dashboard-iphone/unknown
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                entity: binary_sensor.vibro_vibration
-            alignment: end
-            card_mod:
-              style: |
-                {% include 'thirdary_chip_ha_card.jinja' %}
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                tap_action:
-                  action: more-info
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                entity: input_number.kopilka
-                content: "{{states(config.entity)|int}} руб."
-              - type: template
-                tap_action:
-                  action: more-info
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                entity: binary_sensor.vibro_vibration
-                content: "{% include 'last_changed_calc.jinja' %}"
-              - type: conditional
-                conditions:
-                  - condition: numeric_state
-                    entity: sensor.vibro_battery
-                    below: 20
-                chip:
-                  type: template
-                  tap_action:
-                    action: more-info
-                  hold_action:
-                    action: none
-                  double_tap_action:
-                    action: none
-                  entity: sensor.vibro_battery
-                  content: "{{states(config.entity)|int(0)}}%"
-                  icon: mdi:battery-alert-variant-outline
-                  icon_color: red
-            alignment: start
-            card_mod:
-              style: |
-                {% include 'scroll_secondary_ha_card_chip_container.jinja' %}
-        grid_options:
-          columns: 3
-          rows: auto
-        card_mod:
-          style: |
-            {% set entity = 'binary_sensor.vibro_vibration' %}
-            {% set state_on = 'on' %}
-            {% set hover = true %}
-
-            {% include 'stack_card.jinja'%}
-            }
       - type: custom:vertical-stack-in-card
         cards:
           - type: custom:mushroom-template-card
