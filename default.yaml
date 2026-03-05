@@ -5694,7 +5694,6 @@ sections:
                 mushroom-state-info$: |
                   .container {
                    --card-secondary-color: {{states('input_text.tsvet_shrifta_vtorostepennaia_informatsiia')}};
-                   padding-right: 25px;
                 .: |
                   {% include 'mushroom_ha_card_transparent.jinja' %}
           - type: custom:mushroom-chips-card
@@ -5713,15 +5712,7 @@ sections:
                 icon: mdi:volume-medium
               - type: template
                 icon_color: ""
-                icon: >-
-                  {% if state_attr('media_player.yandex_station_m00en2100jayck',
-                  'media_duration')|int(0) > 0 %}
-
-                  fas:backward-step
-
-                  {% else %}
-
-                  {% endif %}
+                icon: fas:backward-step
                 tap_action:
                   action: perform-action
                   perform_action: media_player.media_previous_track
@@ -5752,15 +5743,7 @@ sections:
                 entity: media_player.mac_mini
               - type: template
                 icon_color: ""
-                icon: >-
-                  {% if state_attr('media_player.yandex_station_m00en2100jayck',
-                  'media_duration')|int(0) > 0 %}
-
-                  fas:forward-step
-
-                  {% else %}
-
-                  {% endif %}
+                icon: fas:forward-step
                 tap_action:
                   action: perform-action
                   perform_action: media_player.media_next_track
