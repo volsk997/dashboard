@@ -1287,11 +1287,11 @@ sections:
           - type: conditional
             conditions:
               - condition: state
-                entity: binary_sensor.sitilink
+                entity: binary_sensor.workday_sensor
                 state: "on"
             chip:
               type: template
-              icon: mdi:button-pointer
+              icon: mdi:briefcase
               entity: calendar.work_s
               icon_color: >-
                 {% if is_state('calendar.work_s', 'unavailable') %} disabled
@@ -1513,7 +1513,7 @@ sections:
           - condition: or
             conditions:
               - condition: state
-                entity: binary_sensor.sitilink
+                entity: calendar.work_s
                 state: "on"
               - condition: state
                 entity: binary_sensor.domashnii
@@ -5663,13 +5663,38 @@ sections:
       - type: custom:vertical-stack-in-card
         cards:
           - type: custom:mushroom-template-card
-            primary: |-
-              {% set title = state_attr(config.entity,'media_title') %}
+            primary: >-
+              {% set player_state = states(config.entity) %}
 
-              {% if not is_state(config.entity, 'off') %} 
-                {% if state_attr(config.entity,'media_title') is none or  state_attr(config.entity,'media_title') == ''%} Недоступно
-                {% else%} {{title}} {% endif %}
-              {% else %} Apple Music
+              {% set media_title = state_attr(config.entity, 'media_title') %}
+
+
+              {# Если состояние неизвестно или недоступно #}
+
+              {% if player_state in ['unavailable', 'unknown', None] %}
+                Неизвестно
+
+              {# Если плеер выключен #}
+
+              {% elif player_state == 'off' %}
+                Apple Music
+
+              {# Если плеер на паузе И нет названия трека #}
+
+              {% elif player_state == 'paused' and (media_title is none or
+              media_title == '') %}
+                Не воспроизводится
+
+              {# Если есть название трека (в любом состоянии, кроме off) #}
+
+              {% elif media_title is not none and media_title != '' %}
+                {{ media_title }}
+
+              {# Во всех остальных случаях (пауза с треком, проигрывание и т.д.
+              но без названия) #}
+
+              {% else %}
+                Недоступно
               {% endif %}
             secondary:  
             entity: media_player.mac_mini
@@ -5784,13 +5809,39 @@ sections:
                   action: none
                 entity: media_player.mac_mini
                 icon: ""
-                content: |-
-                  {% set artist = state_attr(config.entity,'media_artist') %}
+                content: >-
+                  {% set player_state = states(config.entity) %}
 
-                  {% if not is_state(config.entity, 'off') %} 
-                    {% if state_attr(config.entity,'media_title') is none or  state_attr(config.entity,'media_title') == ''%} Недоступно
-                    {% else%} {{artist}} {% endif %}
-                  {% else %} Не запущен
+                  {% set media_artist = state_attr(config.entity,
+                  'media_artist') %}
+
+
+                  {# Если состояние неизвестно или недоступно #}
+
+                  {% if player_state in ['unavailable', 'unknown', None] %}
+                    Неизвестно
+
+                  {# Если плеер выключен #}
+
+                  {% elif player_state == 'off' %}
+                    Apple Music
+
+                  {# Если плеер на паузе И нет названия трека #}
+
+                  {% elif player_state == 'paused' and (media_artist is none or
+                  media_artist == '') %}
+                    Неизвестно
+
+                  {# Если есть название трека (в любом состоянии, кроме off) #}
+
+                  {% elif media_artist is not none and media_artist != '' %}
+                    {{ media_artist }}
+
+                  {# Во всех остальных случаях (пауза с треком, проигрывание и
+                  т.д. но без названия) #}
+
+                  {% else %}
+                    Недоступно
                   {% endif %}
                 icon_color: ""
             alignment: start
@@ -5836,6 +5887,12 @@ sections:
           - condition: state
             entity: media_player.mac_mini
             state_not: "off"
+          - condition: state
+            entity: media_player.mac_mini
+            state_not: unavailable
+          - condition: state
+            entity: media_player.mac_mini
+            state_not: unknown
         card_mod:
           style: |
             {% set entity = 'media_player.mac_mini' %}
