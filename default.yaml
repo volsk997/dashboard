@@ -4194,7 +4194,10 @@ sections:
                 {% elif is_state_attr(config.entity, 'app_id', 'com.google.ios.youtube')%} YouTube
                 {% elif is_state_attr(config.entity, 'app_id', 'com.apple.TVAirPlay')%} AirPlay
                 {% elif is_state_attr(config.entity, 'app_id', 'com.apple.TVWatchList')%} AppleTV+
-                {% elif is_state_attr(config.entity, 'app_id', 'com.apple.TVMusic')%} Apple Music
+                {% elif is_state_attr(config.entity, 'app_id', 'com.apple.TVMusic')%}
+                         {% if state_attr(config.entity, 'media_artist') == '' %}Apple Music
+                         {% else %} {{ state_attr(config.entity, 'media_artist')|truncate(100) }}
+                         {% endif %}
                 {% elif is_state_attr(config.entity, 'app_id', 'org.videolan.vlc-ios')%} VLC
                 {% elif is_state_attr(config.entity, 'app_id', 'ru.ivi')%} Иви
                 {% else %} Apple TV
@@ -5119,7 +5122,10 @@ sections:
           - type: custom:mushroom-template-card
             primary: Mac Mini
             secondary: ""
-            icon: mdi:monitor
+            icon: |-
+              {% if is_state(config.entity, 'on')%} mdi:monitor
+              {% else %} mdi:monitor-off
+              {% endif %}
             badge_icon: ""
             tap_action:
               action: none
@@ -5142,18 +5148,6 @@ sections:
                   {% include 'mushroom_ha_card_transparent.jinja' %} 
           - type: custom:mushroom-chips-card
             chips:
-              - type: template
-                entity: binary_sensor.mac_mini_display
-                icon: |-
-                  {% if is_state(config.entity, 'on')%} mdi:monitor
-                  {% else %} mdi:monitor-off
-                  {% endif %}
-                tap_action:
-                  action: more-info
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
               - type: conditional
                 conditions:
                   - condition: state
@@ -5911,8 +5905,8 @@ sections:
                     state_attr('sensor.iphone_15_pro_max_geocoded_location', 'Locality' )  %}  {% set
                     z = state_attr('sensor.iphone_15_pro_max_geocoded_location',
                     'Name')|replace("улица ","")|replace("проспект ","")|replace("бульвар
-                    ","") %}  {% if is_state(config.entity, 'home') %} Дома  {% elif
-                    is_state(config.entity, 'НАРАБОТЕ') %} На работе  {% elif
+                    ","") %}  {% if is_state(config.entity, 'home') %} Дома  
+                    {% elif states(config.entity) == states('input_text.rabota_stanislav')  %} На работе  {% elif
                     is_state(config.entity, 'Дом Мелкой') %} У Мелкой  {% elif
                     is_state(config.entity, 'not_home') %}   
 
@@ -11628,15 +11622,15 @@ sections:
                 {% if state_attr(config.entity,'media_title') is none or  state_attr(config.entity,'media_title') == ''%} Недоступно
                 {% else%}{{ title }} {% endif %}
 
-              {% else %} Станция Лайт
+              {% else %} Станция Лайт 2
               {% endif %}
             secondary:  
-            icon: yandex:station-lite
-            entity: media_player.yandex_station_cyan
+            icon: yandex:station-lite-2
+            entity: media_player.yandex_station_coral
             picture: ""
             badge_icon: ""
             badge_color: ""
-            icon_color: cyan
+            icon_color: 235, 116, 89
             tap_action:
               action: none
             double_tap_action:
@@ -11661,9 +11655,9 @@ sections:
                   {% set x = state_attr(config.entity, 'media_position')|int(0)
                   %}
 
-                  {% set station = 'lite' %}
+                  {% set station = 'lite2' %}
 
-                  {% set station_color = 'cyan' %}
+                  {% set station_color = 'coral' %}
 
                   {% import 'yandex_colors.jinja' as colors %}
 
@@ -11684,7 +11678,7 @@ sections:
             chips:
               - type: template
                 icon: ""
-                entity: media_player.yandex_station_cyan
+                entity: media_player.yandex_station_coral
                 tap_action:
                   action: none
                 hold_action:
@@ -11701,7 +11695,7 @@ sections:
               - type: conditional
                 conditions:
                   - condition: state
-                    entity: media_player.yandex_station_cyan
+                    entity: media_player.yandex_station_coral
                     state: playing
                 chip:
                   type: template
@@ -11709,7 +11703,7 @@ sections:
                     action: perform-action
                     perform_action: media_player.play_media
                     target:
-                      entity_id: media_player.yandex_station_cyan
+                      entity_id: media_player.yandex_station_coral
                     data:
                       media_content_type: command
                       media_content_id: лайк
@@ -11721,7 +11715,7 @@ sections:
               - type: template
                 icon_color: ""
                 icon: >-
-                  {% if state_attr('media_player.yandex_station_cyan',
+                  {% if state_attr('media_player.yandex_station_coral',
                   'media_duration')|int(0) > 0 %}
 
                   fas:backward-step
@@ -11734,7 +11728,7 @@ sections:
                   perform_action: media_player.media_previous_track
                   target:
                     entity_id:
-                      - media_player.yandex_station_cyan
+                      - media_player.yandex_station_coral
                 hold_action:
                   action: none
                 double_tap_action:
@@ -11753,16 +11747,16 @@ sections:
                     entity_id: script.yandex_station_play_pause_extended
                   data:
                     variables:
-                      entity: media_player.yandex_station_cyan
+                      entity: media_player.yandex_station_coral
                 hold_action:
                   action: none
                 double_tap_action:
                   action: none
-                entity: media_player.yandex_station_cyan
+                entity: media_player.yandex_station_coral
               - type: template
                 icon_color: ""
                 icon: >-
-                  {% if state_attr('media_player.yandex_station_cyan',
+                  {% if state_attr('media_player.yandex_station_coral',
                   'media_duration')|int(0) > 0 %}
 
                   fas:forward-step
@@ -11774,7 +11768,7 @@ sections:
                   action: perform-action
                   perform_action: media_player.media_next_track
                   target:
-                    entity_id: media_player.yandex_station_cyan
+                    entity_id: media_player.yandex_station_coral
                 hold_action:
                   action: none
                 double_tap_action:
@@ -11782,7 +11776,7 @@ sections:
               - type: conditional
                 conditions:
                   - condition: state
-                    entity: media_player.yandex_station_cyan
+                    entity: media_player.yandex_station_coral
                     state: playing
                 chip:
                   type: template
@@ -11790,7 +11784,7 @@ sections:
                     action: perform-action
                     perform_action: media_player.play_media
                     target:
-                      entity_id: media_player.yandex_station_cyan
+                      entity_id: media_player.yandex_station_coral
                     data:
                       media_content_type: command
                       media_content_id: дизлайк
@@ -11816,7 +11810,7 @@ sections:
                   action: none
                 double_tap_action:
                   action: none
-                entity: media_player.yandex_station_cyan
+                entity: media_player.yandex_station_coral
                 icon: >-
                   {% if is_state(config.entity, 'unavailable') %}
                   mdi:alert-circle
@@ -11845,7 +11839,7 @@ sections:
                     entity: binary_sensor.multirum_sostoianie
                     state: "on"
                   - condition: state
-                    entity: media_player.yandex_station_cyan
+                    entity: media_player.yandex_station_coral
                     state: playing
                 chip:
                   type: template
@@ -11889,12 +11883,12 @@ sections:
                   {% endif %}
                 tap_action:
                   action: navigate
-                  navigation_path: /dashboard-iphone/station_cyan
+                  navigation_path: /dashboard-iphone/station_coral
                 hold_action:
                   action: none
                 double_tap_action:
                   action: none
-                entity: media_player.yandex_station_cyan
+                entity: media_player.yandex_station_coral
             alignment: end
             card_mod:
               style: |
@@ -11904,7 +11898,7 @@ sections:
           rows: auto
         card_mod:
           style: |
-            {% set entity = 'media_player.yandex_station_cyan' %}
+            {% set entity = 'media_player.yandex_station_coral' %}
             {% set state_on = 'playing' %}
             {% set hover = true %}
 
