@@ -1287,7 +1287,7 @@ sections:
           - type: conditional
             conditions:
               - condition: state
-                entity: binary_sensor.workday_sensor
+                entity: binary_sensor.workday_soon
                 state: "on"
             chip:
               type: template
@@ -1507,32 +1507,14 @@ sections:
                 color:var(--secondary-text-color); font-weight: normal; 
             .: |
               {% set top = -10 %}
-              {% set bottom = -10 %}
+              {% set bottom = 0 %}
               {% include 'title_chips_scrollable.jinja'%}
-        visibility:
-          - condition: or
-            conditions:
-              - condition: state
-                entity: calendar.work_s
-                state: "on"
-              - condition: state
-                entity: binary_sensor.domashnii
-                state: "on"
-              - condition: state
-                entity: calendar.5birthday
-                state: "on"
-              - condition: state
-                entity: calendar.work_m
-                state: "on"
-          - condition: numeric_state
-            entity: sensor.balkon_window_l_battery
-            above: 200
     column_span: 6
     visibility:
       - condition: or
         conditions:
           - condition: state
-            entity: binary_sensor.sitilink
+            entity: binary_sensor.workday_soon
             state: "on"
           - condition: state
             entity: binary_sensor.domashnii
