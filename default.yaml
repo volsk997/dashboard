@@ -518,6 +518,64 @@ sections:
               entity: media_player.gostinaia
           - type: conditional
             conditions:
+              - condition: state
+                entity: binary_sensor.multirum_homepod
+                state: "on"
+            chip:
+              type: template
+              tap_action:
+                action: navigate
+                navigation_path: /dashboard-iphone/homepod_mini_gost
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+              entity: media_player.homepod_mini_gost
+              content: >-
+                {{state_attr(config.entity, 'media_artist')}} -
+                {{state_attr(config.entity, 'media_title')}} 
+              picture: /local/png_icons/homepod_stereo.png
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: binary_sensor.multirum_homepod
+                state: "off"
+            chip:
+              type: template
+              tap_action:
+                action: navigate
+                navigation_path: /dashboard-iphone/homepod_mini_gost
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+              entity: media_player.homepod_mini_gost
+              content: >-
+                {{state_attr(config.entity, 'media_artist')}} -
+                {{state_attr(config.entity, 'media_title')}} 
+              icon: phu:homepod-mini
+              icon_color: ""
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: binary_sensor.multirum_homepod
+                state: "off"
+            chip:
+              type: template
+              tap_action:
+                action: navigate
+                navigation_path: /dashboard-iphone/homepod_mini_gost
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+              entity: media_player.homepod_mini_van
+              content: >-
+                {{state_attr(config.entity, 'media_artist')}} -
+                {{state_attr(config.entity, 'media_title')}} 
+              icon: phu:homepod-mini
+          - type: conditional
+            conditions:
               - entity: media_player.yandex_station_m00en2100jayck
                 state: playing
               - entity: binary_sensor.multirum_sostoianie
@@ -4770,17 +4828,24 @@ sections:
       - type: custom:vertical-stack-in-card
         cards:
           - type: custom:mushroom-template-card
-            primary: |-
-              {% if is_state(config.entity, 'playing') %}
-                {{ state_attr(config.entity, 'media_title') | default('Недоступно', true) }}
+            primary: >-
+              {% if is_state(config.entity, 'playing') and
+              state_attr(config.entity,'media_title') is not none and
+              state_attr(config.entity,'media_title') != '' %}
+                {% if state_attr(config.entity,'media_title') == 'Streaming with pyatv' %}
+                  Стриминг
+                {% else %}
+                  {{ state_attr(config.entity, 'media_title')|truncate(80) }}
+                {% endif %}
               {% else %}
                  Homepod Mini
               {% endif %}
-            secondary: |-
+            secondary: >-
               {% if is_state(config.entity, 'playing') %}
                 {{ state_attr(config.entity, 'media_artist') | default('Неизвестно', true) }}
-              {% elif is_state(config.entity, 'unavailable') %}
-                Неизвестно
+              {% elif states(config.entity) in ['unknown', 'unavailable',
+              'none']  %} Неизвестно
+
               {% else %}
                 Не исполняется
               {% endif %}
@@ -4814,16 +4879,19 @@ sections:
               - type: template
                 icon_color: 120,120,120,0.5
                 icon: >-
-                  {% if state_attr(config.entity, 'volume_level') > 0.5 %}
-                  mdi:volume-high
+                  {% if state_attr(config.entity, 'volume_level')|float(0) > 0.6
+                  %} mdi:volume-high
 
-                  {% elif state_attr(config.entity, 'volume_level') > 0.3 %}
-                  mdi:volume-medium
+                  {% elif state_attr(config.entity, 'volume_level')|float(0) >
+                  0.3 %} mdi:volume-medium
 
-                  {% elif state_attr(config.entity, 'volume_level') > 0.01 %}
-                  mdi:volume-low
+                  {% elif state_attr(config.entity, 'volume_level')|float(0) >
+                  0.01 %} mdi:volume-low
 
-                  {% else %}
+                  {% elif state_attr(config.entity, 'volume_level')|float(0) ==
+                  0 %} mdi:volume-mute
+
+                  {% else %} mdi:help-circle
 
                   {% endif %}
                 tap_action:
@@ -4938,13 +5006,13 @@ sections:
               {% set title = state_attr(config.entity,'media_title') %}
 
               {% if is_state(config.entity, 'playing') %} 
-                {% if state_attr(config.entity,'media_title') is none or  state_attr(config.entity,'media_title') == ''%} Недоступно
+                {% if state_attr(config.entity,'media_title') is none or  state_attr(config.entity,'media_title') == ''%} Неизвестно
                 {% else%}{{ title }}{% endif %}
               {% else %}  Music
               {% endif %}
             secondary:  
             entity: media_player.mac_mini
-            picture: ""
+            picture: "{{state_attr(config.entity, 'entity_picture')}}"
             badge_icon: ""
             badge_color: ""
             icon_color: |
@@ -5031,13 +5099,18 @@ sections:
                   action: none
                 entity: media_player.mac_mini
                 icon: ""
-                content: |-
+                content: >-
                   {% set title = state_attr(config.entity,'media_artist') %}
 
+
                   {% if is_state(config.entity, 'playing') %} 
-                    {% if state_attr(config.entity,'media_artist') is none or  state_attr(config.entity,'media_artist') == ''%} Недоступно
+                    {% if state_attr(config.entity,'media_artist') is none or  state_attr(config.entity,'media_artist') == ''%} Неизвестно
                     {% else%}{{ title }}{% endif %}
+                  {% elif states(config.entity) in ['unknown', 'unavailable',
+                  'none']  %} Недоступно
+
                   {% else %} Не исполняется
+
                   {% endif %}
                 icon_color: ""
             alignment: start
@@ -5452,9 +5525,27 @@ sections:
                 {% else%} {{title}} {% endif %}
               {% else %} Станция Мини
               {% endif %}
-            secondary: |-
-              {% set player = 'media_player.yandex_station_beige' %}
-              {% include 'time_position_yandex.jinja' %}
+            secondary: >
+
+              {% if is_state_attr(config.entity, 'alice_state', 'LISTENING')%}
+              Слушает
+
+              {% elif is_state_attr(config.entity, 'alice_state', 'SPEAKING')%}
+              Говорит
+
+              {% elif is_state_attr(config.entity, 'alice_state', 'BUZY')%}
+              Обработка
+
+              {% elif is_state_attr(config.entity, 'alice_state',
+              'unavailable')%} Недоступно
+
+              {% elif is_state_attr(config.entity, 'alice_state', 'IDLE')%} 
+               {% if is_state(config.entity,'playing')%} Играет
+               {% else %} Бездействует
+               {% endif %}
+              {% else %} Неизвестно
+
+              {% endif%}
             icon: ""
             entity: media_player.yandex_station_m00en2100jayck
             picture: ""
@@ -5798,22 +5889,31 @@ sections:
       - type: custom:vertical-stack-in-card
         cards:
           - type: custom:mushroom-template-card
-            secondary: |2-
-                    {% set x = states(config.entity) %}  {% set y =
-                    state_attr('sensor.iphone_15_pro_max_geocoded_location', 'Locality' )  %}  {% set
-                    z = state_attr('sensor.iphone_15_pro_max_geocoded_location',
-                    'Name')|replace("улица ","")|replace("проспект ","")|replace("бульвар
-                    ","") %}  {% if is_state(config.entity, 'home') %} Дома  
-                    {% elif states(config.entity) == states('input_text.rabota_stanislav')  %} На работе  {% elif
-                    is_state(config.entity, 'Дом Мелкой') %} У Мелкой  {% elif
-                    is_state(config.entity, 'not_home') %}   
+            secondary: >+
+              {% set x =
+              state_attr('sensor.iphone_15_pro_max_geocoded_location',
+              'Locality' ),
+              state_attr('sensor.iphone_15_pro_max_geocoded_location', 'Name' ) 
+              %}
 
-                    {% if is_state_attr('sensor.iphone_15_pro_max_geocoded_location', 'Locality',
-                    'Волжский' ) %} {{z|string|replace
-                    ("'","")|replace ("(","")|replace(")","")}}   {% else %}
-                    {{y|string|replace ("'","")|replace
-                    ("(","")|replace(")","")}}   {% endif %} {% else %}
-                    {{states(config.entity)}}  {% endif %}
+
+              {% if is_state(config.entity, 'home')%} Дома 
+
+              {% elif states(config.entity) ==
+              states('input_text.rabota_stanislav')  %}На работе  
+
+              {% elif is_state(config.entity, 'Дом Мелкой')%} У Мелкой
+
+              {% elif is_state(config.entity, 'not_home')%}{{x|string|replace
+              ("'","")|replace
+              ("(","")|replace(")","")|replace("Волжский,","")}}
+
+              {% elif is_state(config.entity, 'unavailable')%} Недоступно
+
+              {% else %} {{states(config.entity)}} 
+
+              {% endif %}
+
             icon: >-
               {% if state_attr(config.entity, 'icon') != None %}
               {{state_attr(config.entity, 'icon')}} {% else %} mdi:account {%
@@ -6007,7 +6107,8 @@ sections:
               {% if is_state(config.entity, 'home')%} Дома {% elif
               is_state(config.entity, 'Дом Мелкой')%} У мамы {% elif
               is_state(config.entity, 'not_home')%}{{x|string|replace
-              ("'","")|replace ("(","")|replace(")","")}}
+              ("'","")|replace
+              ("(","")|replace(")","")|replace("Волжский,","")}}
 
               {% elif is_state(config.entity, 'unavailable')%} Недоступно
 
@@ -9626,10 +9727,181 @@ sections:
       - type: custom:vertical-stack-in-card
         cards:
           - type: custom:mushroom-template-card
+            primary: >-
+              {% if is_state(config.entity, 'playing') and
+              state_attr(config.entity,'media_title') is not none and
+              state_attr(config.entity,'media_title') != '' %}
+                {% if state_attr(config.entity,'media_title') == 'Streaming with pyatv' %}
+                  Стриминг
+                {% else %}
+                  {{ state_attr(config.entity, 'media_title')|truncate(80) }}
+                {% endif %}
+              {% else %}
+                 Homepod Mini
+              {% endif %}
+            secondary: >-
+              {% if is_state(config.entity, 'playing') %}
+                {{ state_attr(config.entity, 'media_artist') | default('Неизвестно', true) }}
+              {% elif states(config.entity) in ['unknown', 'unavailable',
+              'none']  %} Неизвестно
+
+              {% else %}
+                Не исполняется
+              {% endif %}
+            entity: media_player.homepod_mini_van
+            picture: "{{state_attr(config.entity, 'entity_picture')}}"
+            badge_icon: ""
+            badge_color: ""
+            icon_color: 200,200,200
+            tap_action:
+              action: none
+            double_tap_action:
+              action: none
+            fill_container: true
+            layout: horizontal
+            hold_action:
+              action: none
+            icon: phu:homepod-mini
+            card_mod:
+              style:
+                mushroom-state-info$: |
+                  .container {
+                   --card-secondary-color: {{states('input_text.tsvet_shrifta_vtorostepennaia_informatsiia')}};
+                   padding-right: 25px;
+                .: |
+                  {% include 'mushroom_ha_card_transparent.jinja' %}
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                icon_color: 120,120,120,0.5
+                icon: >-
+                  {% if state_attr(config.entity, 'volume_level')|float(0) > 0.6
+                  %} mdi:volume-high
+
+                  {% elif state_attr(config.entity, 'volume_level')|float(0) >
+                  0.3 %} mdi:volume-medium
+
+                  {% elif state_attr(config.entity, 'volume_level')|float(0) >
+                  0.01 %} mdi:volume-low
+
+                  {% elif state_attr(config.entity, 'volume_level')|float(0) ==
+                  0 %} mdi:volume-mute
+
+                  {% else %} mdi:help-circle
+
+                  {% endif %}
+                tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                entity: media_player.homepod_mini_van
+              - type: template
+                icon_color: ""
+                icon: fas:backward-step
+                tap_action:
+                  action: perform-action
+                  perform_action: media_player.media_previous_track
+                  target:
+                    entity_id:
+                      - media_player.homepod_mini_van
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+              - type: template
+                icon_color: ""
+                icon: >
+                  {% set title = state_attr(config.entity,'media_title') %}
+
+
+                  {% if state_attr(config.entity,'media_title') is none or 
+                  state_attr(config.entity,'media_title') == ''%} fas:lock
+
+                  {% elif is_state(config.entity, 'playing') %} fas:pause
+
+                  {% elif is_state(config.entity, 'paused') %} fas:play
+
+                  {% else%}fas:play
+
+                  {% endif %}
+                tap_action:
+                  action: perform-action
+                  perform_action: media_player.media_play_pause
+                  target:
+                    entity_id: media_player.homepod_mini_van
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                entity: media_player.homepod_mini_van
+              - type: template
+                icon_color: ""
+                icon: fas:forward-step
+                tap_action:
+                  action: perform-action
+                  perform_action: media_player.media_next_track
+                  target:
+                    entity_id: media_player.homepod_mini_van
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+            alignment: justify
+            card_mod:
+              style: |
+                {% set top = 8 %} 
+                {% set font_weight = 400 %}
+                {% set font_size = 14 %}
+                {% set chip_height = 45 %}
+                {% include 'chip_secondary_shape.jinja' %}
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                icon: >-
+                  {% if states(config.entity) in ['unknown', 'unavailable',
+                  'none']  %} mdi:alert-circle
+
+                  {% else %} mdi:chevron-right
+
+                  {% endif %}
+                icon_color: >-
+                  {% if states(config.entity) in ['unknown', 'unavailable',
+                  'none']  %} red
+
+                  {% else %} 
+
+                  {% endif %}
+                tap_action:
+                  action: navigate
+                  navigation_path: /dashboard-iphone/homepod_mini_van
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                entity: media_player.homepod_mini_van
+            alignment: end
+            card_mod:
+              style: |
+                {% include 'thirdary_chip_ha_card.jinja' %}
+        grid_options:
+          columns: 6
+          rows: auto
+        card_mod:
+          style: |
+            {% set entity = 'media_player.homepod_mini_van' %}
+            {% set state_on = 'playing' %}
+            {% set hover = true %}
+
+            {% include 'stack_card.jinja'%}
+      - type: custom:vertical-stack-in-card
+        cards:
+          - type: custom:mushroom-template-card
             primary: ""
             secondary: ""
             icon: yandex:station-lite
-            entity: media_player.yandex_station_beige
+            entity: media_player.yandex_station_purple
             picture: ""
             badge_icon: ""
             badge_color: ""
@@ -9641,7 +9913,7 @@ sections:
                 entity_id: script.yandex_station_play_pause_extended
               data:
                 variables:
-                  entity: media_player.yandex_station_beige
+                  entity: media_player.yandex_station_purple
             double_tap_action:
               action: none
             fill_container: true
@@ -9651,7 +9923,6 @@ sections:
             card_mod:
               style:
                 mushroom-shape-icon$: >-
-
                   {% include 'mushroom_icon_shape.jinja' %}
 
 
@@ -9712,9 +9983,27 @@ sections:
                 {% endif %}
               {% else %} Лайт
               {% endif %}
-            secondary: |-
-              {% set player = 'media_player.yandex_station_beige' %}
-              {% include 'time_position_yandex.jinja' %}
+            secondary: >
+
+              {% if is_state_attr(config.entity, 'alice_state', 'LISTENING')%}
+              Слушает
+
+              {% elif is_state_attr(config.entity, 'alice_state', 'SPEAKING')%}
+              Говорит
+
+              {% elif is_state_attr(config.entity, 'alice_state', 'BUZY')%}
+              Обработка
+
+              {% elif is_state_attr(config.entity, 'alice_state',
+              'unavailable')%} Недоступно
+
+              {% elif is_state_attr(config.entity, 'alice_state', 'IDLE')%} 
+               {% if is_state(config.entity,'playing')%} Играет
+               {% else %} Бездействует
+               {% endif %}
+              {% else %} Неизвестно
+
+              {% endif%}
             icon: ""
             entity: media_player.yandex_station_beige
             picture: ""
@@ -9763,7 +10052,7 @@ sections:
                   {% if states(config.entity) in ['unknown', 'unavailable',
                   'none']  %} red
 
-                  {% else %} 
+                  {% else %} вшыфидув
 
                   {% endif %}
             alignment: end
@@ -11470,9 +11759,27 @@ sections:
                 {% endif %}
               {% else %} Лайт 2
               {% endif %}
-            secondary: |-
-              {% set player = 'media_player.yandex_station_coral' %}
-              {% include 'time_position_yandex.jinja' %}
+            secondary: >
+
+              {% if is_state_attr(config.entity, 'alice_state', 'LISTENING')%}
+              Слушает
+
+              {% elif is_state_attr(config.entity, 'alice_state', 'SPEAKING')%}
+              Говорит
+
+              {% elif is_state_attr(config.entity, 'alice_state', 'BUZY')%}
+              Обработка
+
+              {% elif is_state_attr(config.entity, 'alice_state',
+              'unavailable')%} Недоступно
+
+              {% elif is_state_attr(config.entity, 'alice_state', 'IDLE')%} 
+               {% if is_state(config.entity,'playing')%} Играет
+               {% else %} Бездействует
+               {% endif %}
+              {% else %} Неизвестно
+
+              {% endif%}
             icon: ""
             entity: media_player.yandex_station_coral
             picture: ""
@@ -13197,9 +13504,27 @@ sections:
                 {% endif %}
               {% else %} Лайт
               {% endif %}
-            secondary: |-
-              {% set player = 'media_player.yandex_station_purple' %}
-              {% include 'time_position_yandex.jinja' %}
+            secondary: >
+
+              {% if is_state_attr(config.entity, 'alice_state', 'LISTENING')%}
+              Слушает
+
+              {% elif is_state_attr(config.entity, 'alice_state', 'SPEAKING')%}
+              Говорит
+
+              {% elif is_state_attr(config.entity, 'alice_state', 'BUZY')%}
+              Обработка
+
+              {% elif is_state_attr(config.entity, 'alice_state',
+              'unavailable')%} Недоступно
+
+              {% elif is_state_attr(config.entity, 'alice_state', 'IDLE')%} 
+               {% if is_state(config.entity,'playing')%} Играет
+               {% else %} Бездействует
+               {% endif %}
+              {% else %} Неизвестно
+
+              {% endif%}
             icon: ""
             entity: media_player.yandex_station_purple
             picture: ""
