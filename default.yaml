@@ -521,6 +521,9 @@ sections:
               - condition: state
                 entity: binary_sensor.multirum_homepod
                 state: "on"
+              - condition: state
+                entity: media_player.homepod_mini_gost
+                state: playing
             chip:
               type: template
               tap_action:
@@ -540,6 +543,9 @@ sections:
               - condition: state
                 entity: binary_sensor.multirum_homepod
                 state: "off"
+              - condition: state
+                entity: media_player.homepod_mini_gost
+                state: playing
             chip:
               type: template
               tap_action:
@@ -560,6 +566,9 @@ sections:
               - condition: state
                 entity: binary_sensor.multirum_homepod
                 state: "off"
+              - condition: state
+                entity: media_player.homepod_mini_van
+                state: playing
             chip:
               type: template
               tap_action:
@@ -4152,6 +4161,280 @@ sections:
       - type: custom:vertical-stack-in-card
         cards:
           - type: custom:mushroom-template-card
+            secondary: ""
+            fill_container: true
+            tap_action:
+              action: toggle
+            multiline_secondary: false
+            badge_color: ""
+            badge_icon: ""
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            layout: horizontal
+            icon: "1"
+            picture: ""
+            primary: ""
+            entity: automation.budilnik_2
+            card_mod:
+              style:
+                mushroom-shape-icon$: |
+                  .shape {
+                    --shape-color: тщту !important;
+                  }
+                .: |
+                  ha-card { 
+                    background-color: rgba(255,255,255,0) }};
+                  }  
+          - type: custom:mushroom-template-card
+            secondary:  
+            icon: ""
+            icon_color: ""
+            entity: automation.budilnik_2
+            fill_container: true
+            tap_action:
+              action: more-info
+            picture: ""
+            multiline_secondary: false
+            badge_color: ""
+            badge_icon: ""
+            double_tap_action:
+              action: none
+            hold_action:
+              action: none
+            primary: Будильник
+            card_mod:
+              style:
+                mushroom-state-info$: |
+                  .container {
+                   --card-secondary-color: {{states('input_text.tsvet_shrifta_vtorostepennaia_informatsiia')}};
+                .: |
+                  {% include 'mushroom_ha_card_transparent.jinja' %} 
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                icon: mdi:play
+                content: "{% include 'last_triggered_calc.jinja' %}"
+                icon_color: ""
+                entity: automation.budilnik_2
+            alignment: start
+            card_mod:
+              style: |
+                {% include 'scroll_secondary_ha_card_chip_container.jinja' %}
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                icon: mdi:pencil
+                icon_color: 120,120,120,0.5
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                entity: input_datetime.vremia
+                picture: ""
+            alignment: end
+            card_mod:
+              style: |
+                ha-card {
+                  position: absolute !important;
+                  top: 0% !important;
+                  right: 0% !important;
+                  background-color: none !important;
+                  --chip-background: none !important;
+                  --chip-height: {{states('input_number.s_default_chip_height')}}px !important;
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                icon: ""
+                icon_color: ""
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                content: >-
+                  {{ state_attr('input_datetime.vremia', 'hour') }}:{{ '%02d' |
+                  format(state_attr('input_datetime.vremia', 'minute')) }}
+                entity: automation.budilnik_2
+            alignment: end
+            card_mod:
+              style: |
+                ha-card {
+                  --chip-font-size: 30px;
+                  --chip-font-weight: 300;
+                  position: absolute !important;
+                  top: 4px; !important;
+                  left: 0% !important;
+                  background-color: none !important;
+                  --chip-background: none !important;
+                  --chip-height: {{states('input_number.s_default_chip_height')}}px !important;
+        grid_options:
+          columns: 3
+          rows: auto
+        card_mod:
+          style: |
+            {% set entity = 'automation.budilnik_2' %}
+            {% set state_on = 'on' %}
+            {% set hover = true %}
+
+            {% include 'stack_card.jinja'%}
+      - type: custom:vertical-stack-in-card
+        cards:
+          - type: custom:mushroom-template-card
+            primary: ""
+            secondary: ""
+            icon: mdi:alarm
+            icon_color: >
+              {% if
+              state_attr('calendar.yandex_station_m00en2100jayck_calendar','start_time')
+              is none %} disabled
+
+              {% else %} purple
+
+              {% endif %}
+            picture: ""
+            tap_action:
+              action: none
+            hold_action:
+              action: none
+            fill_container: true
+            badge_color: ""
+            badge_icon: ""
+            double_tap_action:
+              action: none
+            layout: horizontal
+            card_mod:
+              style:
+                mushroom-shape-icon$: |
+                  {% include 'mushroom_icon_shape.jinja' %} 
+                .: |
+                  {% include 'mushroom_ha_card_transparent.jinja' %} 
+          - type: custom:mushroom-template-card
+            icon: ""
+            badge_icon: ""
+            tap_action:
+              action: none
+            entity: automation.budilnik_2
+            icon_color: ""
+            layout: horizontal
+            double_tap_action:
+              action: none
+            badge_color: ""
+            fill_container: true
+            picture: ""
+            hold_action:
+              action: none
+            secondary:  
+            primary: Будильник
+            card_mod:
+              style:
+                .: |
+                  {% include 'mushroom_ha_card_transparent.jinja' %} 
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                icon: ""
+                content: >-
+                  {% if
+                  state_attr('calendar.yandex_station_m00en2100jayck_calendar','start_time')
+                  is none %}
+
+                  {% else %} 
+
+                  {%- set date =
+                  (as_timestamp('calendar.yandex_station_m00en2100jayck_calendar','start_time'))|float(0)
+                  -%}
+
+                  {% set day_now = as_timestamp(now())
+                  |timestamp_custom('%d')|int %}
+
+                  {% set day =
+                  as_timestamp(state_attr('calendar.yandex_station_m00en2100jayck_calendar','start_time'))|timestamp_custom('%-d')
+                  %}
+
+                  {%- set month_list =
+                  ['Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря']
+                  %}
+
+                  {%- set m_ok = date | timestamp_custom("%m",true,0) | int(0)
+                  %}
+
+                  {%- set month = month_list[m_ok-1] %}
+
+                  {% set month_int = as_timestamp(now())
+                  |timestamp_custom('%m')|int %}
+
+                  {% set month_now = as_timestamp(now())
+                  |timestamp_custom('%m')|int %}
+
+                  {% set time =
+                  as_timestamp(state_attr('calendar.yandex_station_m00en2100jayck_calendar','start_time'))
+                  |timestamp_custom('%H:%M') %}
+
+                  {% endif %}
+
+
+                  {% if
+                  state_attr('calendar.yandex_station_m00en2100jayck_calendar','start_time')
+                  is none %} Не установлен
+
+                  {% else %} 
+
+
+                  {% if (day == day_now ) and (month_now == month_int)%} Сегодня
+
+                  {% elif day|int(0)- day_now|int(0)== 1%} Завтра
+
+                   {% else %} {{day}} {{month}}
+                   {% endif %}
+                   в {{ time }}
+                  {% endif %}
+                icon_color: ""
+            alignment: start
+            card_mod:
+              style: |
+                {% include 'scroll_secondary_ha_card_chip_container.jinja' %}
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                icon: yandex:alisa
+                icon_color: 150,150,150,0.5
+                tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+            alignment: end
+            card_mod:
+              style: |
+                {% include 'thirdary_chip_ha_card.jinja' %}
+        grid_options:
+          columns: 3
+          rows: auto
+        card_mod:
+          style: |
+            {% set hover = false %}
+            {% include 'stack_card.jinja'%}
+      - type: custom:vertical-stack-in-card
+        cards:
+          - type: custom:mushroom-template-card
             secondary: >-
               {% if states(config.entity) in ['unknown', 'unavailable', 'none'] 
               %} Недоступно
@@ -4550,280 +4833,6 @@ sections:
             {% set state_on = 'playing' %}
             {% set hover = true %}
 
-            {% include 'stack_card.jinja'%}
-      - type: custom:vertical-stack-in-card
-        cards:
-          - type: custom:mushroom-template-card
-            secondary: ""
-            fill_container: true
-            tap_action:
-              action: toggle
-            multiline_secondary: false
-            badge_color: ""
-            badge_icon: ""
-            hold_action:
-              action: none
-            double_tap_action:
-              action: none
-            layout: horizontal
-            icon: "1"
-            picture: ""
-            primary: ""
-            entity: automation.budilnik_2
-            card_mod:
-              style:
-                mushroom-shape-icon$: |
-                  .shape {
-                    --shape-color: тщту !important;
-                  }
-                .: |
-                  ha-card { 
-                    background-color: rgba(255,255,255,0) }};
-                  }  
-          - type: custom:mushroom-template-card
-            secondary:  
-            icon: ""
-            icon_color: ""
-            entity: automation.budilnik_2
-            fill_container: true
-            tap_action:
-              action: more-info
-            picture: ""
-            multiline_secondary: false
-            badge_color: ""
-            badge_icon: ""
-            double_tap_action:
-              action: none
-            hold_action:
-              action: none
-            primary: Будильник
-            card_mod:
-              style:
-                mushroom-state-info$: |
-                  .container {
-                   --card-secondary-color: {{states('input_text.tsvet_shrifta_vtorostepennaia_informatsiia')}};
-                .: |
-                  {% include 'mushroom_ha_card_transparent.jinja' %} 
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                tap_action:
-                  action: none
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                icon: mdi:play
-                content: "{% include 'last_triggered_calc.jinja' %}"
-                icon_color: ""
-                entity: automation.budilnik_2
-            alignment: start
-            card_mod:
-              style: |
-                {% include 'scroll_secondary_ha_card_chip_container.jinja' %}
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                icon: mdi:pencil
-                icon_color: 120,120,120,0.5
-                tap_action:
-                  action: more-info
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                entity: input_datetime.vremia
-                picture: ""
-            alignment: end
-            card_mod:
-              style: |
-                ha-card {
-                  position: absolute !important;
-                  top: 0% !important;
-                  right: 0% !important;
-                  background-color: none !important;
-                  --chip-background: none !important;
-                  --chip-height: {{states('input_number.s_default_chip_height')}}px !important;
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                icon: ""
-                icon_color: ""
-                tap_action:
-                  action: toggle
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                content: >-
-                  {{ state_attr('input_datetime.vremia', 'hour') }}:{{ '%02d' |
-                  format(state_attr('input_datetime.vremia', 'minute')) }}
-                entity: automation.budilnik_2
-            alignment: end
-            card_mod:
-              style: |
-                ha-card {
-                  --chip-font-size: 30px;
-                  --chip-font-weight: 300;
-                  position: absolute !important;
-                  top: 4px; !important;
-                  left: 0% !important;
-                  background-color: none !important;
-                  --chip-background: none !important;
-                  --chip-height: {{states('input_number.s_default_chip_height')}}px !important;
-        grid_options:
-          columns: 3
-          rows: auto
-        card_mod:
-          style: |
-            {% set entity = 'automation.budilnik_2' %}
-            {% set state_on = 'on' %}
-            {% set hover = true %}
-
-            {% include 'stack_card.jinja'%}
-      - type: custom:vertical-stack-in-card
-        cards:
-          - type: custom:mushroom-template-card
-            primary: ""
-            secondary: ""
-            icon: mdi:alarm
-            icon_color: >
-              {% if
-              state_attr('calendar.yandex_station_m00en2100jayck_calendar','start_time')
-              is none %} disabled
-
-              {% else %} purple
-
-              {% endif %}
-            picture: ""
-            tap_action:
-              action: none
-            hold_action:
-              action: none
-            fill_container: true
-            badge_color: ""
-            badge_icon: ""
-            double_tap_action:
-              action: none
-            layout: horizontal
-            card_mod:
-              style:
-                mushroom-shape-icon$: |
-                  {% include 'mushroom_icon_shape.jinja' %} 
-                .: |
-                  {% include 'mushroom_ha_card_transparent.jinja' %} 
-          - type: custom:mushroom-template-card
-            icon: ""
-            badge_icon: ""
-            tap_action:
-              action: none
-            entity: automation.budilnik_2
-            icon_color: ""
-            layout: horizontal
-            double_tap_action:
-              action: none
-            badge_color: ""
-            fill_container: true
-            picture: ""
-            hold_action:
-              action: none
-            secondary:  
-            primary: Будильник
-            card_mod:
-              style:
-                .: |
-                  {% include 'mushroom_ha_card_transparent.jinja' %} 
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                tap_action:
-                  action: none
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                icon: ""
-                content: >-
-                  {% if
-                  state_attr('calendar.yandex_station_m00en2100jayck_calendar','start_time')
-                  is none %}
-
-                  {% else %} 
-
-                  {%- set date =
-                  (as_timestamp('calendar.yandex_station_m00en2100jayck_calendar','start_time'))|float(0)
-                  -%}
-
-                  {% set day_now = as_timestamp(now())
-                  |timestamp_custom('%d')|int %}
-
-                  {% set day =
-                  as_timestamp(state_attr('calendar.yandex_station_m00en2100jayck_calendar','start_time'))|timestamp_custom('%-d')
-                  %}
-
-                  {%- set month_list =
-                  ['Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря']
-                  %}
-
-                  {%- set m_ok = date | timestamp_custom("%m",true,0) | int(0)
-                  %}
-
-                  {%- set month = month_list[m_ok-1] %}
-
-                  {% set month_int = as_timestamp(now())
-                  |timestamp_custom('%m')|int %}
-
-                  {% set month_now = as_timestamp(now())
-                  |timestamp_custom('%m')|int %}
-
-                  {% set time =
-                  as_timestamp(state_attr('calendar.yandex_station_m00en2100jayck_calendar','start_time'))
-                  |timestamp_custom('%H:%M') %}
-
-                  {% endif %}
-
-
-                  {% if
-                  state_attr('calendar.yandex_station_m00en2100jayck_calendar','start_time')
-                  is none %} Не установлен
-
-                  {% else %} 
-
-
-                  {% if (day == day_now ) and (month_now == month_int)%} Сегодня
-
-                  {% elif day|int(0)- day_now|int(0)== 1%} Завтра
-
-                   {% else %} {{day}} {{month}}
-                   {% endif %}
-                   в {{ time }}
-                  {% endif %}
-                icon_color: ""
-            alignment: start
-            card_mod:
-              style: |
-                {% include 'scroll_secondary_ha_card_chip_container.jinja' %}
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                icon: yandex:alisa
-                icon_color: 150,150,150,0.5
-                tap_action:
-                  action: none
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-            alignment: end
-            card_mod:
-              style: |
-                {% include 'thirdary_chip_ha_card.jinja' %}
-        grid_options:
-          columns: 3
-          rows: auto
-        card_mod:
-          style: |
-            {% set hover = false %}
             {% include 'stack_card.jinja'%}
       - type: custom:vertical-stack-in-card
         cards:
@@ -14679,14 +14688,15 @@ sections:
           - type: template
             tap_action:
               confirmation:
-                text: Точно включить?
+                text: Запустить музыку везде?
               action: perform-action
-              perform_action: script.1668202079285
-              target: {}
+              perform_action: input_boolean.turn_on
+              target:
+                entity_id: input_boolean.multirum_homepod
             double_tap_action:
               action: none
             icon: mdi:play-circle
-            icon_color: 194, 162, 0
+            icon_color: "1"
             content: Мультирум
             card_mod:
               style: |
@@ -14884,6 +14894,9 @@ sections:
                 }
         card_mod:
           style:
+            mushroom-template-chip:nth-child(3)$: |
+              {% set content = 'Homepod' %}     
+              {% include 'chip_secondary_content.jinja' %}
             mushroom-template-chip:nth-child(1)$: |
               {%- set content -%}
                 {%- set last_triggered = states.automation.alisa_dobroe_utro.attributes.last_triggered -%}
