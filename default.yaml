@@ -535,8 +535,9 @@ sections:
                 action: none
               entity: media_player.homepod_mini_gost
               content: >-
-                {{state_attr(config.entity, 'media_artist')}} -
-                {{state_attr(config.entity, 'media_title')}} 
+                {{state_attr(config.entity, 'media_artist')|truncate(20,true)}}
+                - {{state_attr(config.entity,
+                'media_title')|truncate(20,true)}} 
               picture: /local/png_icons/homepod_stereo.png
           - type: conditional
             conditions:
@@ -557,8 +558,9 @@ sections:
                 action: none
               entity: media_player.homepod_mini_gost
               content: >-
-                {{state_attr(config.entity, 'media_artist')}} -
-                {{state_attr(config.entity, 'media_title')}} 
+                {{state_attr(config.entity, 'media_artist')|truncate(20,true)}}
+                - {{state_attr(config.entity,
+                'media_title')|truncate(20,true)}} 
               icon: phu:homepod-mini
               icon_color: ""
           - type: conditional
@@ -580,8 +582,9 @@ sections:
                 action: none
               entity: media_player.homepod_mini_van
               content: >-
-                {{state_attr(config.entity, 'media_artist')}} -
-                {{state_attr(config.entity, 'media_title')}} 
+                {{state_attr(config.entity, 'media_artist')|truncate(20,true)}}
+                - {{state_attr(config.entity,
+                'media_title')|truncate(20,true)}} 
               icon: phu:homepod-mini
           - type: conditional
             conditions:
@@ -4847,7 +4850,7 @@ sections:
                   {{ state_attr(config.entity, 'media_title')|truncate(80) }}
                 {% endif %}
               {% else %}
-                 Homepod Mini
+                Гостиная
               {% endif %}
             secondary: >-
               {% if is_state(config.entity, 'playing') %}
@@ -5202,7 +5205,7 @@ sections:
             hold_action:
               action: none
             layout: horizontal
-            entity: binary_sensor.mac_mini_active
+            entity: binary_sensor.mac_mini_display
             card_mod:
               style:
                 .: |
@@ -5451,7 +5454,7 @@ sections:
         cards:
           - type: custom:mushroom-template-card
             secondary:  
-            icon: yandex:station-mini-2
+            icon: yandex:alisa
             entity: media_player.yandex_station_m00en2100jayck
             picture: ""
             badge_icon: ""
@@ -5465,6 +5468,7 @@ sections:
             layout: horizontal
             hold_action:
               action: none
+            primary: ""
             card_mod:
               style:
                 mushroom-shape-icon$: >-
@@ -5499,10 +5503,6 @@ sections:
                    padding-right: 25px;
                 .: |
                   {% include 'mushroom_ha_card_transparent.jinja' %}
-                  ha-state-icon {
-                    --icon-symbol-size: 21px;
-                  }
-            primary: ""
           - type: custom:mushroom-chips-card
             chips:
               - type: template
@@ -7453,146 +7453,6 @@ sections:
           - type: custom:mushroom-template-card
             primary: ""
             secondary: ""
-            icon: >-
-              {% if state_attr(config.entity, 'icon') != None %}
-              {{state_attr(config.entity, 'icon')}}
-
-              {% else %} mdi:devices
-
-              {% endif %}
-            fill_container: true
-            badge_icon: ""
-            icon_color: |-
-              {% if states(config.entity)|float(0) > 0%} orange
-              {% else %} disabled
-              {% endif%}
-            badge_color: ""
-            hold_action:
-              action: none
-            entity: sensor.presence_mini_light
-            tap_action:
-              action: more-info
-            picture: ""
-            double_tap_action:
-              action: none
-            layout: horizontal
-            card_mod:
-              style:
-                mushroom-shape-icon$: |
-                  {% include 'mushroom_icon_shape.jinja' %} 
-                  {% set minimum = 0 %}
-                  {% set maximum = 200 %}
-                  {% set color = '255,153,0, 1'%}
-                  {% include 'mushroom_icon_shape_after.jinja' %}
-                .: |
-                  {% include 'mushroom_ha_card_transparent.jinja'%}
-          - type: custom:mushroom-template-card
-            secondary:  
-            icon: ""
-            tap_action:
-              action: more-info
-            hold_action:
-              action: none
-            double_tap_action:
-              action: none
-            picture: ""
-            badge_color: ""
-            fill_container: true
-            badge_icon: ""
-            entity: sensor.presence_mini_light
-            icon_color: ""
-            primary: Яркость (Ниша)
-            card_mod:
-              style:
-                .: |
-                  {% include 'mushroom_ha_card_transparent.jinja'%}
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                tap_action:
-                  action: more-info
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                entity: sensor.presence_mini_light
-                icon: ""
-                content: |2-
-                        {% if is_state(config.entity, 'unavailable') %}
-                        Недоступно {% else %} {{states(config.entity)| int(0)| replace(".",",")}} Люкс  {% endif %}
-              - type: template
-                tap_action:
-                  action: more-info
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                entity: sensor.presence_mini_light
-                content: "{% include 'last_changed_calc.jinja' %}"
-              - type: conditional
-                conditions:
-                  - condition: numeric_state
-                    entity: sensor.lux_balkon_battery
-                    below: 20
-                chip:
-                  type: template
-                  tap_action:
-                    action: more-info
-                  hold_action:
-                    action: none
-                  double_tap_action:
-                    action: none
-                  entity: sensor.lux_balkon_battery
-                  content: "{{states(config.entity)|int(0)}}%"
-                  icon: mdi:battery-alert-variant-outline
-                  icon_color: red
-            alignment: start
-            card_mod:
-              style: |
-                {% include 'scroll_secondary_ha_card_chip_container.jinja' %}
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                icon: >
-                  {% set x = config.entity %}
-
-                  {% if states(x) in ['unknown', 'unavailable', 'none']%}
-                  mdi:alert-circle
-
-                  {% else %} mdi:lightbulb-spot
-
-                  {% endif %}
-                icon_color: |
-                  {% set x = config.entity %}
-                  {% if states(x) in ['unknown', 'unavailable', 'none']%} red
-                  {% else %} 150,150,150,0.2
-                  {% endif %}
-                tap_action:
-                  action: none
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                entity: sensor.presence_mini_light
-            alignment: end
-            card_mod:
-              style: |
-                {% include 'thirdary_chip_ha_card.jinja' %}
-        grid_options:
-          columns: 3
-          rows: auto
-        card_mod:
-          style: |
-            {% set entity = 'sensor.presence_mini_light' %}
-            {% set state_on = '' %}
-            {% set hover = true %}
-
-            {% include 'stack_card.jinja'%}
-      - type: custom:vertical-stack-in-card
-        cards:
-          - type: custom:mushroom-template-card
-            primary: ""
-            secondary: ""
             icon: fas:cat
             fill_container: true
             badge_icon: ""
@@ -7781,112 +7641,6 @@ sections:
         card_mod:
           style: |
             {% set entity = 'binary_sensor.gostinaia_cell_motion_detection' %}
-            {% set state_on = 'on' %}
-            {% set hover = true %}
-
-            {% include 'stack_card.jinja'%}
-      - type: custom:vertical-stack-in-card
-        cards:
-          - type: custom:mushroom-template-card
-            primary: ""
-            secondary: ""
-            icon: |-
-              {% if is_state(config.entity, 'on')%} 
-                {% if is_state('binary_sensor.presence_mini_moving_target', 'on')%} mdi:run
-                {% elif is_state('binary_sensor.presence_mini_still_target', 'on')%} mdi:human-male
-                {% endif %}
-              {% else %} mdi:motion-sensor-off
-              {% endif %}
-            entity: binary_sensor.presence_mini_presence
-            badge_icon: ""
-            badge_color: ""
-            tap_action:
-              action: none
-            hold_action:
-              action: none
-            double_tap_action:
-              action: none
-            icon_color: |-
-              {% if is_state(config.entity, 'on')%} blue
-              {% else %} disabled
-              {% endif %}
-            layout: horizontal
-            card_mod:
-              style:
-                mushroom-shape-icon$: |
-                  {% include 'mushroom_icon_shape.jinja' %} 
-                .: |
-                  {% include 'mushroom_ha_card_transparent.jinja' %} 
-          - type: custom:mushroom-template-card
-            icon: ""
-            badge_icon: ""
-            tap_action:
-              action: more-info
-            entity: binary_sensor.presence_mini_presence
-            icon_color: ""
-            layout: horizontal
-            double_tap_action:
-              action: none
-            badge_color: ""
-            fill_container: true
-            picture: ""
-            hold_action:
-              action: none
-            secondary:  
-            primary: Движение в нише
-            card_mod:
-              style:
-                .: |
-                  {% include 'mushroom_ha_card_transparent.jinja' %} 
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                icon: >-
-                  {% if states(config.entity) in ['unknown', 'unavailable',
-                  'none']  %} mdi:alert-circle
-
-                  {% else %} mdi:lightbulb-spot
-
-                  {% endif %}
-                icon_color: >-
-                  {% if states(config.entity) in ['unknown', 'unavailable',
-                  'none']  %} red
-
-                  {% else %} 150,150,150,0.2
-
-                  {% endif %}
-                tap_action:
-                  action: none
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                entity: binary_sensor.presence_mini_presence
-            alignment: end
-            card_mod:
-              style: |
-                {% include 'thirdary_chip_ha_card.jinja' %}
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                tap_action:
-                  action: more-info
-                hold_action:
-                  action: none
-                double_tap_action:
-                  action: none
-                entity: binary_sensor.presence_mini_presence
-                content: "{% include 'last_changed_calc.jinja' %}"
-            alignment: start
-            card_mod:
-              style: |
-                {% include 'scroll_secondary_ha_card_chip_container.jinja' %}
-        grid_options:
-          columns: 3
-          rows: auto
-        card_mod:
-          style: |
-            {% set entity = 'binary_sensor.presence_mini_presence' %}
             {% set state_on = 'on' %}
             {% set hover = true %}
 
@@ -9746,7 +9500,7 @@ sections:
                   {{ state_attr(config.entity, 'media_title')|truncate(80) }}
                 {% endif %}
               {% else %}
-                 Homepod Mini
+                Ванная
               {% endif %}
             secondary: >-
               {% if is_state(config.entity, 'playing') %}
@@ -9909,7 +9663,7 @@ sections:
           - type: custom:mushroom-template-card
             primary: ""
             secondary: ""
-            icon: yandex:station-lite
+            icon: yandex:alisa
             entity: media_player.yandex_station_purple
             picture: ""
             badge_icon: ""
@@ -9959,9 +9713,6 @@ sections:
                   {% include 'mushroom_icon_shape_after.jinja' %}
                 .: |
                   {% include 'mushroom_ha_card_transparent.jinja' %}
-                  ha-state-icon {
-                    --icon-symbol-size: 21px;
-                  }
           - type: custom:mushroom-chips-card
             chips:
               - type: template
@@ -11684,7 +11435,7 @@ sections:
           - type: custom:mushroom-template-card
             primary: ""
             secondary: ""
-            icon: yandex:station-lite-2
+            icon: yandex:alisa
             entity: media_player.yandex_station_coral
             picture: ""
             badge_icon: ""
@@ -11735,9 +11486,6 @@ sections:
                   {% include 'mushroom_icon_shape_after.jinja' %}
                 .: |
                   {% include 'mushroom_ha_card_transparent.jinja' %}
-                  ha-state-icon {
-                    --icon-symbol-size: 21px;
-                  }
           - type: custom:mushroom-chips-card
             chips:
               - type: template
@@ -13430,7 +13178,7 @@ sections:
           - type: custom:mushroom-template-card
             primary: ""
             secondary: ""
-            icon: yandex:station-lite
+            icon: yandex:alisa
             entity: media_player.yandex_station_purple
             picture: ""
             badge_icon: ""
@@ -13480,9 +13228,6 @@ sections:
                   {% include 'mushroom_icon_shape_after.jinja' %}
                 .: |
                   {% include 'mushroom_ha_card_transparent.jinja' %}
-                  ha-state-icon {
-                    --icon-symbol-size: 21px;
-                  }
           - type: custom:mushroom-chips-card
             chips:
               - type: template
