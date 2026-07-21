@@ -47,6 +47,15 @@ sections:
               - condition: state
                 state: "on"
           - type: entity
+            show_state: true
+            show_icon: true
+            entity: input_datetime.vremia
+            color: deep-purple
+            visibility:
+              - condition: state
+                entity: automation.budilnik_2
+                state: "on"
+          - type: entity
             show_state: false
             show_icon: true
             entity: sensor.otzhimaniia
@@ -92,15 +101,6 @@ sections:
           - type: entity
             show_state: true
             show_icon: true
-            entity: input_datetime.vremia
-            color: deep-purple
-            visibility:
-              - condition: state
-                entity: automation.budilnik_2
-                state: "on"
-          - type: entity
-            show_state: true
-            show_icon: true
             entity: sensor.svet_vezde
             icon: mdi:lightbulb
             visibility:
@@ -140,6 +140,15 @@ sections:
             visibility:
               - condition: numeric_state
                 above: 0
+          - type: entity
+            show_state: true
+            show_icon: true
+            entity: sensor.kukhnia_aerogril_taimer_aerogril
+            icon: material-symbols-light:multicooker
+            visibility:
+              - condition: state
+                entity: binary_sensor.air_fryer_state_on
+                state: "on"
           - type: entity
             show_state: true
             show_icon: true
@@ -3379,7 +3388,8 @@ sections:
               action: perform-action
               perform_action: media_player.media_play_pause
               target:
-                entity_id: media_player.homepod_mini_gost
+                entity_id: media_player.homepod_mini_van
+              data: {}
             tap_action:
               action: navigate
               navigation_path: /dashboard-iphone/homepod_mini_van
@@ -3718,6 +3728,9 @@ sections:
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
         secondary: >-
+          {% if is_state('binary_sensor.open_wash_contact', 'on') %} Открыто・{%
+          else %} {% endif %}
+
           {% if is_state('timer.washing','active')%}{% set sec =
           states('sensor.every_sec_sensor')|float(0) %}{% set dur =
           state_attr('timer.washing', 'duration') %}{% set f =
@@ -3953,67 +3966,6 @@ sections:
         card_mod:
           style: |
             {% set entity = 'light.prikhozhaia' %}
-            {% set state_on = 'on' %}
-            {% include 'stack_card.jinja'%}
-      - type: custom:mushroom-template-card
-        secondary: >
-          {% if is_state(config.entity, 'on' )%}{{(state_attr(config.entity,
-          'brightness')|float(0)/255*100)|round(0)}}%・{% else %}{% endif %}{%
-          include 'last_changed_calc.jinja' %}
-        features_position: bottom
-        entity: light.svet_v_podezde
-        icon_tap_action:
-          action: toggle
-        tap_action:
-          action: more-info
-        color: |-
-          {% if is_state(config.entity, 'on') %} 
-            {% if (state_attr(config.entity, 'color_temp_kelvin')|float(0)) == 0 %}{{(state_attr(config.entity, 'rgb_color'))}}
-            {% elif (state_attr(config.entity, 'color_temp_kelvin')) < 4000 %} orange
-            {% elif (state_attr(config.entity, 'color_temp_kelvin')) >= 4000 %} #6fa8fc
-            {% else %} 
-            {% endif %}
-          {% else %} grey
-          {% endif %}
-        icon: >-
-          {% if state_attr(config.entity, 'icon') != None %}
-          {{state_attr(config.entity, 'icon')}}
-
-          {% else %} mdi:lightbulb
-
-          {% endif %}
-        primary: Свет в подъезде
-        card_mod:
-          style: |
-            {% set entity = 'light.svet_v_podezde' %}
-            {% set state_on = 'on' %}
-            {% include 'stack_card.jinja'%}
-      - type: custom:mushroom-template-card
-        secondary: >
-          {% if is_state(config.entity, 'on' )%}{{(state_attr(config.entity,
-          'brightness')|float(0)/255*100)|round(0)}}%・{% else %}{% endif %}{%
-          include 'last_changed_calc.jinja' %}
-        features_position: bottom
-        entity: light.lampa_6
-        icon_tap_action:
-          action: toggle
-        tap_action:
-          action: more-info
-        color: |-
-          {% if is_state(config.entity, 'on') %} orange
-          {% else %} grey
-          {% endif %}
-        icon: >-
-          {% if state_attr(config.entity, 'icon') != None %}
-          {{state_attr(config.entity, 'icon')}}
-
-          {% else %} mdi:lightbulb
-
-          {% endif %}
-        primary: Свет в тамбуре
-        card_mod:
-          style: |
-            {% set entity = 'light.lampa_6' %}
             {% set state_on = 'on' %}
             {% include 'stack_card.jinja'%}
       - type: custom:vertical-stack-in-card
@@ -4353,8 +4305,7 @@ sections:
         icon_tap_action:
           action: none
         tap_action:
-          action: navigate
-          navigation_path: /dashboard-service/relays
+          action: more-info
         color: |-
           {% if states('sensor.power_counter_power_a')|int(0) > 3500 %} red
           {% else %} grey
@@ -4449,6 +4400,10 @@ sections:
             {% set entity = 'binary_sensor.zamok_contact' %}
             {% set state_on = 'on' %}
             {% include 'stack_card.jinja'%}
+        visibility:
+          - condition: state
+            entity: binary_sensor.zamok_indoor_contact
+            state: "on"
       - type: custom:mushroom-template-card
         secondary: "{% include 'last_changed_calc.jinja' %}"
         features_position: bottom
@@ -4475,6 +4430,67 @@ sections:
           - condition: state
             entity: binary_sensor.zamok_contact
             state: "on"
+      - type: custom:mushroom-template-card
+        secondary: >
+          {% if is_state(config.entity, 'on' )%}{{(state_attr(config.entity,
+          'brightness')|float(0)/255*100)|round(0)}}%・{% else %}{% endif %}{%
+          include 'last_changed_calc.jinja' %}
+        features_position: bottom
+        entity: light.svet_v_podezde
+        icon_tap_action:
+          action: toggle
+        tap_action:
+          action: more-info
+        color: |-
+          {% if is_state(config.entity, 'on') %} 
+            {% if (state_attr(config.entity, 'color_temp_kelvin')|float(0)) == 0 %}{{(state_attr(config.entity, 'rgb_color'))}}
+            {% elif (state_attr(config.entity, 'color_temp_kelvin')) < 4000 %} orange
+            {% elif (state_attr(config.entity, 'color_temp_kelvin')) >= 4000 %} #6fa8fc
+            {% else %} 
+            {% endif %}
+          {% else %} grey
+          {% endif %}
+        icon: >-
+          {% if state_attr(config.entity, 'icon') != None %}
+          {{state_attr(config.entity, 'icon')}}
+
+          {% else %} mdi:lightbulb
+
+          {% endif %}
+        primary: Свет в подъезде
+        card_mod:
+          style: |
+            {% set entity = 'light.svet_v_podezde' %}
+            {% set state_on = 'on' %}
+            {% include 'stack_card.jinja'%}
+      - type: custom:mushroom-template-card
+        secondary: >
+          {% if is_state(config.entity, 'on' )%}{{(state_attr(config.entity,
+          'brightness')|float(0)/255*100)|round(0)}}%・{% else %}{% endif %}{%
+          include 'last_changed_calc.jinja' %}
+        features_position: bottom
+        entity: light.lampa_6
+        icon_tap_action:
+          action: toggle
+        tap_action:
+          action: more-info
+        color: |-
+          {% if is_state(config.entity, 'on') %} orange
+          {% else %} grey
+          {% endif %}
+        icon: >-
+          {% if state_attr(config.entity, 'icon') != None %}
+          {{state_attr(config.entity, 'icon')}}
+
+          {% else %} mdi:lightbulb
+
+          {% endif %}
+        primary: Свет в тамбуре
+        card_mod:
+          style: |
+            {% set entity = 'light.lampa_6' %}
+            {% set state_on = 'on' %}
+            {% include 'stack_card.jinja'%}
     column_span: 6
   - type: grid
     cards:
