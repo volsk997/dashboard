@@ -17,7 +17,7 @@ sections:
               action: more-info
             visibility:
               - condition: state
-                state: "off"
+                state: 'off'
           - type: entity
             show_state: false
             show_icon: true
@@ -28,7 +28,7 @@ sections:
               action: more-info
             visibility:
               - condition: state
-                state: "off"
+                state: 'off'
           - type: entity
             show_state: false
             show_icon: true
@@ -36,7 +36,7 @@ sections:
             icon: mdi:web-check
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
           - type: entity
             show_state: false
             show_icon: true
@@ -45,7 +45,7 @@ sections:
             icon: mdi:vpn
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
           - type: entity
             show_state: true
             show_icon: true
@@ -53,7 +53,7 @@ sections:
             visibility:
               - condition: state
                 entity: automation.budilnik_2
-                state: "on"
+                state: 'on'
           - type: entity
             show_state: false
             show_icon: true
@@ -62,7 +62,7 @@ sections:
             visibility:
               - condition: state
                 entity: calendar.health
-                state: "off"
+                state: 'off'
           - type: entity
             show_state: false
             show_icon: true
@@ -70,7 +70,7 @@ sections:
             icon: mdi:creation
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
             color: purple
           - type: entity
             show_state: true
@@ -147,7 +147,7 @@ sections:
             visibility:
               - condition: state
                 entity: binary_sensor.air_fryer_state_on
-                state: "on"
+                state: 'on'
           - type: entity
             show_state: true
             show_icon: true
@@ -164,13 +164,13 @@ sections:
             icon: mdi:run-fast
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
           - type: button
             icon: mdi:pig-variant
             tap_action:
               action: navigate
               navigation_path: /dashboard-iphone/unknown
-            text: " ›"
+            text: ' ›'
     column_span: 6
   - type: grid
     cards:
@@ -190,7 +190,7 @@ sections:
             entity: camera.gostinaia
             tap_action:
               action: navigate
-              navigation_path: /dashboard-iphone/cam_gost
+              navigation_path: '#c200'
             hold_action:
               action: none
             card_mod:
@@ -235,7 +235,7 @@ sections:
                 conditions:
                   - condition: state
                     entity: binary_sensor.gostinaia_cell_motion_detection
-                    state: "on"
+                    state: 'on'
                 chip:
                   type: template
                   entity: binary_sensor.gostinaia_cell_motion_detection
@@ -263,7 +263,7 @@ sections:
                 conditions:
                   - condition: state
                     entity: binary_sensor.gostinaia_noise
-                    state: "on"
+                    state: 'on'
                 chip:
                   type: template
                   entity: binary_sensor.gostinaia_noise
@@ -333,7 +333,7 @@ sections:
             entity: camera.kukhnia
             tap_action:
               action: navigate
-              navigation_path: /dashboard-iphone/cam_kuh
+              navigation_path: '#c100'
             hold_action:
               action: none
             card_mod:
@@ -378,7 +378,7 @@ sections:
                 conditions:
                   - condition: state
                     entity: binary_sensor.kukhnia_cell_motion_detection
-                    state: "on"
+                    state: 'on'
                 chip:
                   type: template
                   entity: binary_sensor.kukhnia_cell_motion_detection
@@ -406,7 +406,7 @@ sections:
                 conditions:
                   - condition: state
                     entity: binary_sensor.kukhnia_noise
-                    state: "on"
+                    state: 'on'
                 chip:
                   type: template
                   entity: binary_sensor.kukhnia_noise
@@ -476,7 +476,7 @@ sections:
             entity: camera.balkon
             tap_action:
               action: navigate
-              navigation_path: /dashboard-iphone/cam_balcon
+              navigation_path: '#c500'
             hold_action:
               action: none
             card_mod:
@@ -521,7 +521,7 @@ sections:
                 conditions:
                   - condition: state
                     entity: binary_sensor.balkon_cell_motion_detection
-                    state: "on"
+                    state: 'on'
                 chip:
                   type: template
                   entity: binary_sensor.balkon_cell_motion_detection
@@ -549,7 +549,7 @@ sections:
                 conditions:
                   - condition: state
                     entity: binary_sensor.balkon_person_detection
-                    state: "on"
+                    state: 'on'
                 chip:
                   type: template
                   entity: binary_sensor.balkon_person_detection
@@ -577,7 +577,7 @@ sections:
                 conditions:
                   - condition: state
                     entity: binary_sensor.balkon_noise
-                    state: "on"
+                    state: 'on'
                 chip:
                   type: template
                   entity: binary_sensor.balkon_noise
@@ -647,7 +647,7 @@ sections:
             entity: camera.prikhozhaia
             tap_action:
               action: navigate
-              navigation_path: /dashboard-iphone/cam_prih
+              navigation_path: '#c200c'
             hold_action:
               action: none
             card_mod:
@@ -692,7 +692,7 @@ sections:
                 conditions:
                   - condition: state
                     entity: binary_sensor.prikhozhaia_cell_motion_detection
-                    state: "on"
+                    state: 'on'
                 chip:
                   type: template
                   entity: binary_sensor.prikhozhaia_cell_motion_detection
@@ -720,7 +720,7 @@ sections:
                 conditions:
                   - condition: state
                     entity: binary_sensor.prikhozhaia_noise
-                    state: "on"
+                    state: 'on'
                 chip:
                   type: template
                   entity: binary_sensor.prikhozhaia_noise
@@ -791,7 +791,7 @@ sections:
             entity: camera.podezd
             tap_action:
               action: navigate
-              navigation_path: /dashboard-iphone/cam_exit
+              navigation_path: '#ipc'
             hold_action:
               action: none
             card_mod:
@@ -834,7 +834,7 @@ sections:
                 conditions:
                   - condition: state
                     entity: binary_sensor.podezd_motion_alarm
-                    state: "on"
+                    state: 'on'
                 chip:
                   type: template
                   entity: binary_sensor.podezd_motion_alarm
@@ -913,7 +913,7 @@ sections:
             color: green
             tap_action:
               action: navigate
-              navigation_path: /dashboard-iphone/Cal
+              navigation_path: '#cal'
           - type: entity
             show_state: true
             show_icon: true
@@ -924,7 +924,7 @@ sections:
               - start_time
             tap_action:
               action: navigate
-              navigation_path: /dashboard-iphone/Cal
+              navigation_path: '#cal'
             color: blue
           - type: entity
             show_state: true
@@ -936,7 +936,7 @@ sections:
             color: orange
             tap_action:
               action: navigate
-              navigation_path: /dashboard-iphone/Cal
+              navigation_path: '#cal'
       - type: custom:mushroom-template-card
         features_position: bottom
         entity: person.stanislav
@@ -944,9 +944,9 @@ sections:
           action: more-info
         icon_tap_action:
           action: more-info
-        primary: "{{state_attr(config.entity, 'friendly_name')}}"
+        primary: '{{state_attr(config.entity, ''friendly_name'')}}'
         icon: mdi:account
-        picture: "{{state_attr(config.entity, 'entity_picture')}}"
+        picture: '{{state_attr(config.entity, ''entity_picture'')}}'
         secondary: >+
           {% set x = state_attr('sensor.iphone_15_pro_max_geocoded_location',
           'Locality' ), state_attr('sensor.iphone_15_pro_max_geocoded_location',
@@ -963,7 +963,7 @@ sections:
 
           {% endif %}
 
-        badge_icon: "1"
+        badge_icon: '1'
         badge_color: |-
           {% set disabled = '0,0,0,0' %}
           {% include 'person_colors.jinja' %}
@@ -979,9 +979,9 @@ sections:
           action: more-info
         icon_tap_action:
           action: more-info
-        primary: "{{state_attr(config.entity, 'friendly_name')}}"
+        primary: '{{state_attr(config.entity, ''friendly_name'')}}'
         icon: mdi:account
-        picture: "{{state_attr(config.entity, 'entity_picture')}}"
+        picture: '{{state_attr(config.entity, ''entity_picture'')}}'
         secondary: >+
           {% set x = state_attr('sensor.iphone_valeriia_geocoded_location',
           'Locality' ), state_attr('sensor.iphone_valeriia_geocoded_location',
@@ -998,7 +998,7 @@ sections:
 
           {% endif %}
 
-        badge_icon: "1"
+        badge_icon: '1'
         badge_color: |-
           {% set disabled = '0,0,0,0' %}
           {% include 'person_colors.jinja' %}
@@ -1014,14 +1014,14 @@ sections:
           action: more-info
         tap_action:
           action: more-info
-        primary: "{{state_attr(config.entity, 'friendly_name')}}"
+        primary: '{{state_attr(config.entity, ''friendly_name'')}}'
         icon: mdi:account
-        picture: "{{state_attr(config.entity, 'entity_picture')}}"
+        picture: '{{state_attr(config.entity, ''entity_picture'')}}'
         secondary: |-
           {% if is_state(config.entity, 'home') %} Дома • Wi-Fi
           {% else %} Не дома
           {% endif %}
-        badge_icon: "1"
+        badge_icon: '1'
         badge_color: |-
           {% set disabled = '0,0,0,0' %}
           {% include 'person_colors.jinja' %}
@@ -1040,14 +1040,14 @@ sections:
           action: more-info
         tap_action:
           action: more-info
-        primary: "{{state_attr(config.entity, 'friendly_name')}}"
+        primary: '{{state_attr(config.entity, ''friendly_name'')}}'
         icon: mdi:account
-        picture: "{{state_attr(config.entity, 'entity_picture')}}"
+        picture: '{{state_attr(config.entity, ''entity_picture'')}}'
         secondary: |-
           {% if is_state(config.entity, 'home') %} Дома • Wi-Fi
           {% else %} Не дома
           {% endif %}
-        badge_icon: "1"
+        badge_icon: '1'
         badge_color: |-
           {% set disabled = '0,0,0,0' %}
           {% include 'person_colors.jinja' %}
@@ -1066,14 +1066,14 @@ sections:
           action: more-info
         tap_action:
           action: more-info
-        primary: "{{state_attr(config.entity, 'friendly_name')}}"
+        primary: '{{state_attr(config.entity, ''friendly_name'')}}'
         icon: mdi:face-woman
-        picture: "{{state_attr(config.entity, 'entity_picture')}}"
+        picture: '{{state_attr(config.entity, ''entity_picture'')}}'
         secondary: |-
           {% if is_state(config.entity, 'home') %} Дома • Wi-Fi
           {% else %} Не дома
           {% endif %}
-        badge_icon: "1"
+        badge_icon: '1'
         color: pink
         visibility:
           - condition: state
@@ -1119,9 +1119,6 @@ sections:
               - condition: state
                 state: playing
             icon: yandex:station-mini-2
-            tap_action:
-              action: navigate
-              navigation_path: /dashboard-iphone/station_mini
             state_content: media_title
           - type: entity
             show_state: true
@@ -1131,9 +1128,6 @@ sections:
               - condition: state
                 state: playing
             icon: phu:homepod-mini
-            tap_action:
-              action: navigate
-              navigation_path: /dashboard-iphone/homepod_mini_gost
             state_content: media_title
           - type: entity
             show_state: false
@@ -1144,7 +1138,7 @@ sections:
               action: more-info
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
           - type: entity
             show_state: false
             show_icon: true
@@ -1152,7 +1146,7 @@ sections:
             visibility:
               - condition: state
                 entity: binary_sensor.kreslo
-                state: "on"
+                state: 'on'
             tap_action:
               action: more-info
           - type: entity
@@ -1163,7 +1157,7 @@ sections:
             color: red
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
             tap_action:
               action: more-info
           - type: entity
@@ -1370,7 +1364,7 @@ sections:
           action: toggle
         tap_action:
           action: navigate
-          navigation_path: /dashboard-iphone/2-light
+          navigation_path: '#duo'
         color: |-
           {% if is_state(config.entity, 'on') %} 
             {% if (state_attr(config.entity, 'color_temp_kelvin')|float(0)) == 0 %}{{(state_attr(config.entity, 'rgb_color'))}}
@@ -1404,7 +1398,7 @@ sections:
           action: toggle
         tap_action:
           action: navigate
-          navigation_path: /dashboard-iphone/ambi
+          navigation_path: '#ambi'
         color: |-
           {% if is_state('light.embi_lampa', 'on') %} 
             {% set kelvin = state_attr('light.embi_lampa', 'color_temp_kelvin') | float(default=0) %}
@@ -1475,7 +1469,7 @@ sections:
         primary: Гирлянда Окно ›
         tap_action:
           action: navigate
-          navigation_path: /dashboard-iphone/girland
+          navigation_path: '#girland'
         card_mod:
           style: |
             {% set entity = 'switch.girlyand_window' %}
@@ -1506,7 +1500,7 @@ sections:
         visibility:
           - condition: state
             entity: input_boolean.kanun_novogo_goda
-            state: "on"
+            state: 'on'
         card_mod:
           style: |
             {% set entity = 'switch.girland_stol' %}
@@ -1537,7 +1531,7 @@ sections:
         visibility:
           - condition: state
             entity: input_boolean.kanun_novogo_goda
-            state: "on"
+            state: 'on'
         card_mod:
           style: |
             {% set entity = 'switch.digmaswitch' %}
@@ -1557,14 +1551,14 @@ sections:
           {% endif %}
         tap_action:
           action: navigate
-          navigation_path: /dashboard-iphone/edidier-ir
+          navigation_path: '#edifier'
         card_mod:
           style: |
             {% set entity = 'input_boolean.akustika' %}
             {% set state_on = 'on' %}
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         icon: mdi:security-network
         features_position: bottom
         entity: switch.keenetic_giga_ed4de2_wireguard_kotikey_5121332
@@ -1671,7 +1665,7 @@ sections:
                 entity_id: switch.ac_switch
             tap_action:
               action: navigate
-              navigation_path: /dashboard-iphone/ac-ios
+              navigation_path: '#ac'
             color: |
               {% if is_state(config.entity, 'off') %} grey
               {% elif is_state(config.entity, 'cool') %} blue
@@ -1680,7 +1674,7 @@ sections:
               {% elif is_state(config.entity, 'auto') %} indigo
               {% else %} blue
               {% endif %}
-            primary: "Кондиционер › "
+            primary: 'Кондиционер › '
             entity: climate.ac_fan
             card_mod:
               style:
@@ -1699,12 +1693,12 @@ sections:
                 double_tap_action:
                   action: none
                 icon: mdi:power
-                icon_color: "1"
+                icon_color: '1'
               - type: conditional
                 conditions:
                   - condition: state
                     entity: fan.ac_switch
-                    state: "on"
+                    state: 'on'
                 chip:
                   type: template
                   tap_action:
@@ -1833,7 +1827,7 @@ sections:
           - type: custom:mushroom-chips-card
             chips:
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: ion:play-back
                 tap_action:
                   action: perform-action
@@ -1846,7 +1840,7 @@ sections:
                 double_tap_action:
                   action: none
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: |-
                   {% if is_state(config.entity, 'paused')%}fas:play
                   {% elif is_state(config.entity, 'playing')%}fas:pause
@@ -1864,7 +1858,7 @@ sections:
                   action: none
                 entity: media_player.mac_mini
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: ion:play-forward
                 tap_action:
                   action: perform-action
@@ -1917,7 +1911,7 @@ sections:
         visibility:
           - condition: state
             entity: media_player.mac_mini
-            state_not: "off"
+            state_not: 'off'
           - condition: state
             entity: media_player.mac_mini
             state_not: unavailable
@@ -1955,7 +1949,7 @@ sections:
                 entity_id: media_player.yandex_station_m00en2100jayck
             tap_action:
               action: navigate
-              navigation_path: /dashboard-iphone/mini
+              navigation_path: '#yandex_mini'
             primary: |-
               {% set title = state_attr(config.entity,'media_title') %}
 
@@ -1965,7 +1959,7 @@ sections:
               {% else %} Станция Мини
               {% endif %} ›
             entity: media_player.yandex_station_m00en2100jayck
-            picture: "{{state_attr(config.entity, 'entity_picture_local')}}"
+            picture: '{{state_attr(config.entity, ''entity_picture_local'')}}'
             color: grey
             card_mod:
               style:
@@ -1994,7 +1988,7 @@ sections:
                     action: none
                   icon: mdi:heart
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: >-
                   {% if state_attr('media_player.yandex_station_m00en2100jayck',
                   'media_duration')|int(0) > 0 %}
@@ -2015,7 +2009,7 @@ sections:
                 double_tap_action:
                   action: none
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: |-
                   {% if is_state(config.entity, 'paused')%}fas:play
                   {% elif is_state(config.entity, 'playing')%}fas:pause
@@ -2035,7 +2029,7 @@ sections:
                   action: none
                 entity: media_player.yandex_station_m00en2100jayck
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: >-
                   {% if state_attr('media_player.yandex_station_m00en2100jayck',
                   'media_duration')|int(0) > 0 %}
@@ -2113,7 +2107,7 @@ sections:
                 entity_id: media_player.homepod_mini_gost
             tap_action:
               action: navigate
-              navigation_path: /dashboard-iphone/homepod_mini_gost
+              navigation_path: '#homepod_gost'
             color: |
               {% if is_state(config.entity, 'playing') %} 120,120,120
                 {% else%} grey
@@ -2132,7 +2126,7 @@ sections:
               {% endif %}
                ›
             entity: media_player.homepod_mini_gost
-            picture: "{{state_attr(config.entity, 'entity_picture')}}"
+            picture: '{{state_attr(config.entity, ''entity_picture'')}}'
             card_mod:
               style:
                 .: |
@@ -2140,7 +2134,7 @@ sections:
           - type: custom:mushroom-chips-card
             chips:
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: ion:play-back
                 tap_action:
                   action: perform-action
@@ -2153,7 +2147,7 @@ sections:
                 double_tap_action:
                   action: none
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: >
                   {% set title = state_attr(config.entity,'media_title') %}
 
@@ -2179,7 +2173,7 @@ sections:
                   action: none
                 entity: media_player.homepod_mini_gost
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: ion:play-forward
                 tap_action:
                   action: perform-action
@@ -2237,7 +2231,7 @@ sections:
                 entity_id: media_player.gostinaia
             tap_action:
               action: navigate
-              navigation_path: /dashboard-iphone/appletv_ios
+              navigation_path: '#apple_tv'
             color: |-
               {% if is_state(config.entity, 'playing') %} black
               {% else %} grey
@@ -2254,7 +2248,7 @@ sections:
               {% endif %}
                ›
             entity: media_player.gostinaia
-            picture: "{{state_attr(config.entity, 'entity_picture')}}"
+            picture: '{{state_attr(config.entity, ''entity_picture'')}}'
             card_mod:
               style:
                 .: |
@@ -2278,7 +2272,7 @@ sections:
                 double_tap_action:
                   action: none
                 icon: mdi:power
-                icon_color: "1"
+                icon_color: '1'
               - type: conditional
                 conditions:
                   - condition: state
@@ -2424,7 +2418,7 @@ sections:
              {{states('sensor.macbook_air_app')|replace("Экран блокировки","")}}
            {% endif %}
         icon: |-
-          {% if is_state('binary_sensor.air_active', 'on')%} mdi:laptop
+          {% if is_state('binary_sensor.ekran_macbook_air', 'on')%} mdi:laptop
           {% else %} mdi:laptop-off
           {% endif %}
         icon_tap_action:
@@ -2500,7 +2494,7 @@ sections:
             {% set state_on = 'on' %}
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         features_position: bottom
         entity: binary_sensor.presence_mini_presence
         icon_tap_action:
@@ -2525,7 +2519,7 @@ sections:
             {% set state_on = 'on' %}
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         features_position: bottom
         entity: binary_sensor.kreslo
         icon_tap_action:
@@ -2586,7 +2580,7 @@ sections:
             {% set state_on = 'on' %}
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{{states('input_number.kopilka')|int}} руб."
+        secondary: '{{states(''input_number.kopilka'')|int}} руб.'
         icon: >-
           {% if state_attr(config.entity, 'icon') != None %}
           {{state_attr(config.entity, 'icon')}}
@@ -2601,7 +2595,7 @@ sections:
           action: none
         tap_action:
           action: navigate
-          navigation_path: /dashboard-iphone/unknown
+          navigation_path: '#kopilka'
         card_mod:
           style: |
             {% set entity = '' %}
@@ -2663,7 +2657,7 @@ sections:
             entity: binary_sensor.open_balcon_contact
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
             icon: fas:door-open
             tap_action:
               action: more-info
@@ -2674,7 +2668,7 @@ sections:
             icon: mdi:window-open-variant
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
             tap_action:
               action: more-info
           - type: entity
@@ -2684,7 +2678,7 @@ sections:
             icon: mdi:window-open-variant
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
             tap_action:
               action: more-info
           - type: entity
@@ -2694,7 +2688,7 @@ sections:
             icon: mdi:window-open-variant
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
             tap_action:
               action: more-info
           - type: entity
@@ -2707,7 +2701,7 @@ sections:
               action: more-info
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
           - type: entity
             show_state: true
             show_icon: true
@@ -2831,7 +2825,7 @@ sections:
 
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         features_position: bottom
         entity: binary_sensor.open_balcon_contact
         icon_tap_action:
@@ -2880,7 +2874,7 @@ sections:
             {% set state_on = 'on' %}
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         features_position: bottom
         entity: binary_sensor.motion_balkon_occupancy
         icon_tap_action:
@@ -2907,10 +2901,12 @@ sections:
         icon_tap_action:
           action: none
         tap_action:
-          action: more-info
+          action: navigate
+          navigation_path: '#weather'
         primary: >-
           {{state_attr(config.entity,
           'temperature')|round(0)}}°・{{state_translated(config.entity)}}
+           ›
         color: |-
           {% if is_state(config.entity, 'on')%} orange
           {% else %} grey
@@ -2919,7 +2915,7 @@ sections:
           Ощущается как {{state_attr(config.entity,
           'apparent_temperature')|round(0)}}°
         icon: mdi:weather-cloudy-clock
-        picture: "{{state_attr(config.entity, 'entity_picture')}}"
+        picture: '{{state_attr(config.entity, ''entity_picture'')}}'
         card_mod:
           style: |
             {% set entity = '' %}
@@ -2941,9 +2937,6 @@ sections:
                 entity: media_player.yandex_station_coral
                 state: playing
             icon: yandex:station-lite-2
-            tap_action:
-              action: navigate
-              navigation_path: /dashboard-iphone/station_coral
             state_content: media_title
           - type: entity
             show_state: false
@@ -2951,7 +2944,7 @@ sections:
             entity: binary_sensor.dry_kuhnya_water_leak
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
             tap_action:
               action: more-info
             color: red
@@ -2963,7 +2956,7 @@ sections:
             icon: mdi:fridge-bottom
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
             tap_action:
               action: more-info
           - type: entity
@@ -2972,7 +2965,7 @@ sections:
             entity: binary_sensor.open_morozilka_contact
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
             tap_action:
               action: more-info
             icon: mdi:fridge-top
@@ -2993,7 +2986,7 @@ sections:
             icon: mdi:window-open-variant
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
             tap_action:
               action: more-info
           - type: entity
@@ -3006,7 +2999,7 @@ sections:
               action: more-info
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
           - type: entity
             show_state: true
             show_icon: true
@@ -3091,7 +3084,7 @@ sections:
                 entity_id: media_player.yandex_station_coral
             tap_action:
               action: navigate
-              navigation_path: /dashboard-iphone/station_coral
+              navigation_path: '#yandex_coral'
             primary: |-
               {% set title = state_attr(config.entity,'media_title') %}
 
@@ -3101,7 +3094,7 @@ sections:
               {% else %} Станция Лайт 2
               {% endif %} ›
             entity: media_player.yandex_station_coral
-            picture: "{{state_attr(config.entity, 'entity_picture_local')}}"
+            picture: '{{state_attr(config.entity, ''entity_picture_local'')}}'
             color: 235, 116, 89
             card_mod:
               style:
@@ -3110,7 +3103,7 @@ sections:
           - type: custom:mushroom-chips-card
             chips:
               - type: template
-                icon: ""
+                icon: ''
                 entity: media_player.yandex_station_coral
                 tap_action:
                   action: none
@@ -3118,7 +3111,7 @@ sections:
                   action: none
                 double_tap_action:
                   action: none
-                picture: "{{state_attr(config.entity, 'entity_picture_local')}}"
+                picture: '{{state_attr(config.entity, ''entity_picture_local'')}}'
             alignment: end
             card_mod:
               style: |
@@ -3146,7 +3139,7 @@ sections:
                     action: none
                   icon: mdi:heart
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: >-
                   {% if state_attr('media_player.yandex_station_coral',
                   'media_duration')|int(0) > 0 %}
@@ -3167,7 +3160,7 @@ sections:
                 double_tap_action:
                   action: none
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: |-
                   {% if is_state(config.entity, 'paused')%}fas:play
                   {% elif is_state(config.entity, 'playing')%}fas:pause
@@ -3187,7 +3180,7 @@ sections:
                   action: none
                 entity: media_player.yandex_station_coral
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: >-
                   {% if state_attr('media_player.yandex_station_coral',
                   'media_duration')|int(0) > 0 %}
@@ -3259,7 +3252,8 @@ sections:
           target:
             entity_id: switch.polaris_1725cgld_power
         tap_action:
-          action: more-info
+          action: navigate
+          navigation_path: '#kettle'
         color: |-
           {% if not is_state(config.entity, 'off') %}
 
@@ -3272,7 +3266,7 @@ sections:
            {% endif %}
           {% else %}grey
           {% endif %}
-        primary: Чайник
+        primary: 'Чайник › '
         card_mod:
           style: |
             {% set entity = 'switch.polaris_1725cgld_power' %}
@@ -3314,7 +3308,7 @@ sections:
           {% else %}grey{% endif %}
         tap_action:
           action: navigate
-          navigation_path: /dashboard-iphone/fryer
+          navigation_path: '#fryer'
         badge_icon: >-
           {% if
           is_state('sensor.xiaomi_ru_917438569_maf65_status_p_2_1','Приостановить
@@ -3330,7 +3324,7 @@ sections:
             {% set state_on = 'on' %}
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         icon: |-
           {% if is_state(config.entity, 'on')%} mdi:fridge-bottom
           {% else %} mdi:fridge-outline
@@ -3354,7 +3348,7 @@ sections:
             {% set state_on = 'on' %}
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         icon: |-
           {% if is_state(config.entity, 'on')%} mdi:fridge-bottom
           {% else %} mdi:fridge-outline
@@ -3378,7 +3372,7 @@ sections:
             {% set state_on = 'on' %}
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         icon: |-
           {% if is_state(config.entity, 'on')%} mdi:water-alert
           {% else %} mdi:water-off
@@ -3405,7 +3399,7 @@ sections:
             {% set hover = true %}
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         features_position: bottom
         entity: binary_sensor.motion_kuhnya_occupancy
         icon_tap_action:
@@ -3439,7 +3433,7 @@ sections:
             entity: binary_sensor.dry_stoyak_water_leak
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
             tap_action:
               action: more-info
             color: red
@@ -3450,7 +3444,7 @@ sections:
             entity: binary_sensor.water_bath_water_leak
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
             tap_action:
               action: more-info
             color: red
@@ -3463,9 +3457,6 @@ sections:
               - condition: state
                 state: playing
             icon: phu:homepod-mini
-            tap_action:
-              action: navigate
-              navigation_path: /dashboard-iphone/homepod_mini_van
             state_content: media_title
           - type: entity
             show_state: true
@@ -3476,9 +3467,6 @@ sections:
                 entity: media_player.yandex_station_beige
                 state: playing
             icon: yandex:station-lite
-            tap_action:
-              action: navigate
-              navigation_path: /dashboard-iphone/yandex-lite-bath
             state_content: media_title
           - type: entity
             show_state: false
@@ -3490,7 +3478,7 @@ sections:
               action: more-info
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
           - type: entity
             show_state: false
             show_icon: true
@@ -3499,10 +3487,10 @@ sections:
               action: more-info
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
               - condition: state
                 entity: binary_sensor.bathroom_presence_moving_target
-                state: "off"
+                state: 'off'
             icon: mdi:human-male
             color: primary
           - type: entity
@@ -3612,7 +3600,7 @@ sections:
               data: {}
             tap_action:
               action: navigate
-              navigation_path: /dashboard-iphone/homepod_mini_van
+              navigation_path: '#homepod_van'
             color: |
               {% if is_state(config.entity, 'playing') %} 120,120,120
                 {% else%} grey
@@ -3631,7 +3619,7 @@ sections:
               {% endif %}
                ›
             entity: media_player.homepod_mini_van
-            picture: "{{state_attr(config.entity, 'entity_picture')}}"
+            picture: '{{state_attr(config.entity, ''entity_picture'')}}'
             card_mod:
               style:
                 .: |
@@ -3639,7 +3627,7 @@ sections:
           - type: custom:mushroom-chips-card
             chips:
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: ion:play-back
                 tap_action:
                   action: perform-action
@@ -3652,7 +3640,7 @@ sections:
                 double_tap_action:
                   action: none
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: >
                   {% set title = state_attr(config.entity,'media_title') %}
 
@@ -3678,7 +3666,7 @@ sections:
                   action: none
                 entity: media_player.homepod_mini_van
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: ion:play-forward
                 tap_action:
                   action: perform-action
@@ -3731,7 +3719,7 @@ sections:
                 entity_id: media_player.yandex_station_beige
             tap_action:
               action: navigate
-              navigation_path: /dashboard-iphone/yandex-lite-bath
+              navigation_path: '#yandex_beige'
             primary: |-
               {% set title = state_attr(config.entity,'media_title') %}
 
@@ -3741,7 +3729,7 @@ sections:
               {% else %} Станция Лайт
               {% endif %} ›
             entity: media_player.yandex_station_beige
-            picture: "{{state_attr(config.entity, 'entity_picture_local')}}"
+            picture: '{{state_attr(config.entity, ''entity_picture_local'')}}'
             color: 216, 175, 151
             card_mod:
               style:
@@ -3750,7 +3738,7 @@ sections:
           - type: custom:mushroom-chips-card
             chips:
               - type: template
-                icon: ""
+                icon: ''
                 entity: media_player.yandex_station_beige
                 tap_action:
                   action: none
@@ -3758,7 +3746,7 @@ sections:
                   action: none
                 double_tap_action:
                   action: none
-                picture: "{{state_attr(config.entity, 'entity_picture_local')}}"
+                picture: '{{state_attr(config.entity, ''entity_picture_local'')}}'
             alignment: end
             card_mod:
               style: |
@@ -3786,7 +3774,7 @@ sections:
                     action: none
                   icon: mdi:heart
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: >-
                   {% if state_attr('media_player.yandex_station_beige',
                   'media_duration')|int(0) > 0 %}
@@ -3807,7 +3795,7 @@ sections:
                 double_tap_action:
                   action: none
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: |-
                   {% if is_state(config.entity, 'paused')%}fas:play
                   {% elif is_state(config.entity, 'playing')%}fas:pause
@@ -3827,7 +3815,7 @@ sections:
                   action: none
                 entity: media_player.yandex_station_beige
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: >-
                   {% if state_attr('media_player.yandex_station_beige',
                   'media_duration')|int(0) > 0 %}
@@ -3933,7 +3921,7 @@ sections:
           action: toggle
         tap_action:
           action: navigate
-          navigation_path: /dashboard-iphone/fresh_air
+          navigation_path: '#air_fresher'
         color: |-
           {% if is_state(config.entity, 'on' )%}
           blue
@@ -3984,7 +3972,7 @@ sections:
             {% set state_on = 'on' %}
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         features_position: bottom
         entity: binary_sensor.open_bath_contact
         icon_tap_action:
@@ -4006,7 +3994,7 @@ sections:
             {% set state_on = 'on' %}
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         icon: |-
           {% if is_state(config.entity, 'on')%} mdi:water-alert
           {% else %} mdi:water-off
@@ -4033,7 +4021,7 @@ sections:
             {% set hover = true %}
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         icon: |-
           {% if is_state(config.entity, 'on')%} mdi:water-alert
           {% else %} mdi:water-off
@@ -4060,7 +4048,7 @@ sections:
             {% set hover = true %}
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         features_position: bottom
         entity: binary_sensor.bathroom_presence_presence
         icon_tap_action:
@@ -4100,9 +4088,6 @@ sections:
                 state: playing
             icon: yandex:station-lite
             state_content: media_title
-            tap_action:
-              action: navigate
-              navigation_path: /dashboard-iphone/lite
           - type: entity
             show_state: false
             show_icon: true
@@ -4126,7 +4111,7 @@ sections:
               action: more-info
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
           - type: entity
             show_state: false
             show_icon: true
@@ -4134,7 +4119,7 @@ sections:
             icon: fas:door-open
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
             tap_action:
               action: more-info
           - type: entity
@@ -4144,7 +4129,7 @@ sections:
             color: green
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
           - type: entity
             show_state: false
             show_icon: true
@@ -4152,7 +4137,7 @@ sections:
             color: red
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
           - type: entity
             show_state: false
             show_icon: true
@@ -4160,7 +4145,7 @@ sections:
             color: green
             visibility:
               - condition: state
-                state: "on"
+                state: 'on'
         heading: Прихожая
       - type: custom:mushroom-template-card
         secondary: >+
@@ -4234,7 +4219,7 @@ sections:
                 entity_id: media_player.yandex_station_purple
             tap_action:
               action: navigate
-              navigation_path: /dashboard-iphone/lite
+              navigation_path: '#yandex_purple'
             primary: |-
               {% set title = state_attr(config.entity,'media_title') %}
 
@@ -4244,7 +4229,7 @@ sections:
               {% else %} Станция Лайт
               {% endif %} ›
             entity: media_player.yandex_station_purple
-            picture: "{{state_attr(config.entity, 'entity_picture_local')}}"
+            picture: '{{state_attr(config.entity, ''entity_picture_local'')}}'
             color: purple
             card_mod:
               style:
@@ -4253,7 +4238,7 @@ sections:
           - type: custom:mushroom-chips-card
             chips:
               - type: template
-                icon: ""
+                icon: ''
                 entity: media_player.yandex_station_purple
                 tap_action:
                   action: none
@@ -4261,7 +4246,7 @@ sections:
                   action: none
                 double_tap_action:
                   action: none
-                picture: "{{state_attr(config.entity, 'entity_picture_local')}}"
+                picture: '{{state_attr(config.entity, ''entity_picture_local'')}}'
             alignment: end
             card_mod:
               style: |
@@ -4289,7 +4274,7 @@ sections:
                     action: none
                   icon: mdi:heart
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: >-
                   {% if state_attr('media_player.yandex_station_purple',
                   'media_duration')|int(0) > 0 %}
@@ -4310,7 +4295,7 @@ sections:
                 double_tap_action:
                   action: none
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: |-
                   {% if is_state(config.entity, 'paused')%}fas:play
                   {% elif is_state(config.entity, 'playing')%}fas:pause
@@ -4330,7 +4315,7 @@ sections:
                   action: none
                 entity: media_player.yandex_station_purple
               - type: template
-                icon_color: ""
+                icon_color: ''
                 icon: >-
                   {% if state_attr('media_player.yandex_station_purple',
                   'media_duration')|int(0) > 0 %}
@@ -4399,7 +4384,7 @@ sections:
               action: none
             tap_action:
               action: navigate
-              navigation_path: /dashboard-iphone/domofon
+              navigation_path: '#domofon'
             color: |-
               {% set color = 'green' %}
               {% if is_state(config.entity, 'on') %} {{color}}
@@ -4417,7 +4402,7 @@ sections:
                 conditions:
                   - condition: state
                     entity: binary_sensor.domofon_vkhodiashchii_zvonok
-                    state: "on"
+                    state: 'on'
                 chip:
                   type: template
                   tap_action:
@@ -4433,7 +4418,7 @@ sections:
                 conditions:
                   - condition: state
                     entity: binary_sensor.domofon_vkhodiashchii_zvonok
-                    state: "on"
+                    state: 'on'
                 chip:
                   type: template
                   tap_action:
@@ -4449,7 +4434,7 @@ sections:
                 conditions:
                   - condition: state
                     entity: switch.domofon_otkryvat_na_sleduiushchii_zvonok
-                    state: "on"
+                    state: 'on'
                 chip:
                   type: template
                   tap_action:
@@ -4458,13 +4443,13 @@ sections:
                     action: none
                   double_tap_action:
                     action: none
-                  icon: "{{states[config.entity].attributes.icon}}"
+                  icon: '{{states[config.entity].attributes.icon}}'
                   entity: switch.domofon_otkryvat_na_sleduiushchii_zvonok
               - type: conditional
                 conditions:
                   - condition: state
                     entity: switch.domofon_otkliuchit_trubku_domofona
-                    state: "on"
+                    state: 'on'
                 chip:
                   type: template
                   tap_action:
@@ -4479,11 +4464,11 @@ sections:
                 conditions:
                   - condition: state
                     entity: switch.domofon_vsegda_sbrasyvat
-                    state: "on"
+                    state: 'on'
                 chip:
                   type: template
-                  content: ""
-                  icon: "{{states[config.entity].attributes.icon}}"
+                  content: ''
+                  icon: '{{states[config.entity].attributes.icon}}'
                   tap_action:
                     action: none
                   hold_action:
@@ -4495,11 +4480,11 @@ sections:
                 conditions:
                   - condition: state
                     entity: switch.domofon_otkryvat_vsegda
-                    state: "on"
+                    state: 'on'
                 chip:
                   type: template
-                  content: ""
-                  icon: "{{states[config.entity].attributes.icon}}"
+                  content: ''
+                  icon: '{{states[config.entity].attributes.icon}}'
                   tap_action:
                     action: none
                   hold_action:
@@ -4516,7 +4501,7 @@ sections:
                 double_tap_action:
                   action: none
                 entity: binary_sensor.domofon_vkhodiashchii_zvonok
-                content: "{% include 'last_changed_calc.jinja' %}"
+                content: '{% include ''last_changed_calc.jinja'' %}'
             alignment: start
             card_mod:
               style: |
@@ -4558,7 +4543,7 @@ sections:
             {% set state_on = 'on' %}
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         features_position: bottom
         entity: binary_sensor.motion_enter_occupancy
         icon_tap_action:
@@ -4580,7 +4565,7 @@ sections:
             {% set state_on = 'on' %}
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         features_position: bottom
         entity: binary_sensor.open_exit_contact
         icon_tap_action:
@@ -4602,7 +4587,7 @@ sections:
             {% set state_on = 'on' %}
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         features_position: bottom
         entity: event.button_action
         icon_tap_action:
@@ -4621,7 +4606,7 @@ sections:
             {% set state_on = 'on' %}
             {% include 'stack_card.jinja'%}
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         features_position: bottom
         entity: binary_sensor.zamok_contact
         icon_tap_action:
@@ -4645,9 +4630,9 @@ sections:
         visibility:
           - condition: state
             entity: binary_sensor.zamok_indoor_contact
-            state: "on"
+            state: 'on'
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_changed_calc.jinja' %}"
+        secondary: '{% include ''last_changed_calc.jinja'' %}'
         features_position: bottom
         entity: binary_sensor.zamok_indoor_contact
         icon_tap_action:
@@ -4671,7 +4656,7 @@ sections:
         visibility:
           - condition: state
             entity: binary_sensor.zamok_contact
-            state: "on"
+            state: 'on'
       - type: custom:mushroom-template-card
         secondary: >
           {% if is_state(config.entity, 'on' )%}{{(state_attr(config.entity,
@@ -4713,7 +4698,10 @@ sections:
         features_position: bottom
         entity: light.lampa_6
         icon_tap_action:
-          action: toggle
+          action: perform-action
+          perform_action: light.turn_on
+          target:
+            entity_id: light.lampa_6
         tap_action:
           action: more-info
         color: |-
@@ -4728,6 +4716,8 @@ sections:
 
           {% endif %}
         primary: Свет в тамбуре
+        badge_icon: mdi:lock
+        badge_color: red
         card_mod:
           style: |
             {% set entity = 'light.lampa_6' %}
@@ -4742,7 +4732,7 @@ sections:
         badges: []
         heading: Сценарии
       - type: custom:mushroom-template-card
-        secondary: "{% include 'last_triggered_calc.jinja' %}"
+        secondary: '{% include ''last_triggered_calc.jinja'' %}'
         icon: mdi:sleep
         features_position: bottom
         entity: automation.spat
@@ -4807,7 +4797,7 @@ sections:
                 double_tap_action:
                   action: none
                 icon: mdi:star
-                content: ""
+                content: ''
                 tap_action:
                   action: navigate
                   navigation_path: /dashboard-iphone
@@ -4823,10 +4813,10 @@ sections:
                 double_tap_action:
                   action: none
                 icon: mdi:camera
-                content: ""
+                content: ''
                 tap_action:
                   action: navigate
-                  navigation_path: /dashboard-iphone/cctv_iphone
+                  navigation_path: '#cam'
                 card_mod:
                   style:
                     .: |
@@ -4839,7 +4829,7 @@ sections:
                 double_tap_action:
                   action: none
                 icon: fas:dumbbell
-                content: ""
+                content: ''
                 tap_action:
                   action: navigate
                   navigation_path: /dashboard-service/health
@@ -4853,12 +4843,12 @@ sections:
                 icon: mdi:map-marker-path
                 tap_action:
                   action: navigate
-                  navigation_path: /dashboard-service/maps
+                  navigation_path: '#maps'
                 hold_action:
                   action: none
                 double_tap_action:
                   action: none
-                content: ""
+                content: ''
                 card_mod:
                   style:
                     .: |
@@ -4871,7 +4861,7 @@ sections:
                 double_tap_action:
                   action: none
                 icon: mdi:cog
-                content: ""
+                content: ''
                 tap_action:
                   action: navigate
                   navigation_path: /dashboard-service/settings
@@ -4891,13 +4881,13 @@ sections:
                   entity: media_player.homepod_mini_gost
                   tap_action:
                     action: navigate
-                    navigation_path: /dashboard-iphone/homepod_mini_gost
+                    navigation_path: '#homepod_gost'
                   hold_action:
                     action: none
                   double_tap_action:
                     action: none
                   icon: mdi:play
-                  content: ""
+                  content: ''
                   picture: |
                     {{ state_attr(config.entity, 'entity_picture')}}
                   card_mod:
@@ -4933,6 +4923,12 @@ sections:
                   {% set icon_size = 30 %}
                   {% set chip_spacing = 20 %}
                   {%include 'fixed_bottom_bar.jinja' %}
+  - type: grid
+    cards:
+      - type: custom:global-cards
+        source_dashboard: lovelace
+        source_view: popups
+        mode: popup
 cards: []
 visible:
   - user: 1a1897c1b5d24702ae00645a47e23e99
